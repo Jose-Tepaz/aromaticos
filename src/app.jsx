@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { Nav, Footer, TweaksPanel } from "./components.jsx";
 import Home from "./home.jsx";
 import Division from "./division.jsx";
@@ -7,11 +8,12 @@ import Personalization from "./personalization.jsx";
 import Contact from "./contact.jsx";
 
 const App = () => {
-  const [page, setPage] = useState(() => {
-    try { return localStorage.getItem("aroma_page") || "home"; } catch { return "home"; }
-  });
+  const navigate = useNavigate();
+  const location = useLocation();
   const [theme, setThemeState] = useState("cream");
   const [tweaksOn, setTweaksOn] = useState(false);
+
+  const page = location.pathname.replace(/^\//, "") || "home";
 
   const setTheme = (t) => {
     setThemeState(t);
@@ -22,10 +24,12 @@ const App = () => {
     document.documentElement.setAttribute("data-theme", theme);
   }, []);
 
-  const go = (p) => {
-    setPage(p);
-    try { localStorage.setItem("aroma_page", p); } catch {}
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location.pathname]);
+
+  const go = (p) => {
+    navigate(p === "home" ? "/" : `/${p}`);
   };
 
   useEffect(() => {
@@ -38,17 +42,21 @@ const App = () => {
     return () => window.removeEventListener("message", handler);
   }, []);
 
-  let content = null;
-  if (page === "home") content = <Home go={go} />;
-  else if (page === "fragancias" || page === "sabores" || page === "materias") content = <Division id={page} go={go} />;
-  else if (page === "nosotros") content = <About go={go} />;
-  else if (page === "personalizacion") content = <Personalization go={go} />;
-  else if (page === "contacto") content = <Contact go={go} />;
-
   return (
     <>
       <Nav page={page} go={go} />
-      <main key={page}>{content}</main>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home go={go} />} />
+          <Route path="/fragancias" element={<Division id="fragancias" go={go} />} />
+          <Route path="/sabores" element={<Division id="sabores" go={go} />} />
+          <Route path="/materias" element={<Division id="materias" go={go} />} />
+          <Route path="/nosotros" element={<About go={go} />} />
+          <Route path="/personalizacion" element={<Personalization go={go} />} />
+          <Route path="/contacto" element={<Contact go={go} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
       <Footer go={go} />
       <TweaksPanel theme={theme} setTheme={setTheme} visible={tweaksOn} />
     </>
