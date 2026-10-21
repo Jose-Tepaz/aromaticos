@@ -1,12 +1,15 @@
 import { Placeholder } from "../components.jsx";
+import { Reveal } from "../motion.jsx";
 import esenciaImage from "../../public/imagenes/img-1.webp";
 
 const EsenciaSection = ({ go }) => (
-  <section style={{ padding: "140px 0" }}>
+  <section style={{ padding: "clamp(72px, 11vw, 140px) 0" }}>
     <div className="wrap">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
-        <Placeholder variant="navy" label="Archivo histórico · frasco 1956" height="620px" image={esenciaImage} />
-        <div>
+      <div className="split-2" style={{ alignItems: "center" }}>
+        <Reveal variant="left">
+          <Placeholder variant="navy" label="Archivo histórico · frasco 1956" height="clamp(340px, 95vw, 620px)" image={esenciaImage} parallax />
+        </Reveal>
+        <Reveal delay={150}>
           <div className="eyebrow">Nuestra esencia</div>
           <h2 className="section-title" style={{ marginBottom: 20 }}>
             La memoria olfativa de <em>una nación</em>.
@@ -24,7 +27,7 @@ const EsenciaSection = ({ go }) => (
           <button className="btn-ghost" onClick={() => go("nosotros")}>
             Leer historia completa <span className="arrow">↗</span>
           </button>
-        </div>
+        </Reveal>
       </div>
     </div>
   </section>

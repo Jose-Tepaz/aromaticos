@@ -1,4 +1,5 @@
 import { Placeholder, PersonalCTA } from "./components.jsx";
+import { Reveal } from "./motion.jsx";
 
 const DIVISION_DATA = {
   fragancias: {
@@ -87,9 +88,9 @@ const Division = ({ id, go }) => {
 
   return (
     <div className="page">
-      <section style={{ padding: "40px 0 120px" }}>
+      <section style={{ padding: "40px 0 clamp(66px, 8.3vw, 120px)" }}>
         <div className="wrap">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40 }}>
+          <div className="crumbs" style={{ marginBottom: 40 }}>
             <div className="mono" style={{ opacity: .6 }}>
               <span style={{ cursor: "pointer" }} onClick={() => go("home")}>Inicio</span>
               <span style={{ margin: "0 10px", opacity: .5 }}>/</span>
@@ -100,13 +101,13 @@ const Division = ({ id, go }) => {
             <div className="mono" style={{ opacity: .5 }}>{d.num} — 03</div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "stretch" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div className="split-2" style={{ alignItems: "stretch" }}>
+            <div className="stagger-in" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             
               <div>
                 <div className="eyebrow">{d.tag}</div>
                 <h1 className="serif" style={{
-                  fontSize: "clamp(80px, 11vw, 180px)", lineHeight: .9,
+                  fontSize: "clamp(52px, 11vw, 180px)", lineHeight: .9,
                   letterSpacing: "-.03em", margin: "24px 0", fontWeight: 400,
                 }}>
                   {d.name.split(" ").map((w, i, arr) => (
@@ -120,7 +121,7 @@ const Division = ({ id, go }) => {
                 </p>
               </div>
 
-              <div style={{ display: "flex", gap: 32, marginTop: 40 }}>
+              <div style={{ display: "flex", gap: 32, marginTop: 40, flexWrap: "wrap" }}>
                 <div>
                   <div className="serif" style={{ fontSize: 44, lineHeight: 1 }}>{d.items.length * 8}+</div>
                   <div className="mono" style={{ opacity: .6, marginTop: 6 }}>Fórmulas activas</div>
@@ -134,15 +135,17 @@ const Division = ({ id, go }) => {
               </div>
               
             </div>
-            <Placeholder variant={d.variant} label={d.heroLabel} height="640px" dark={d.variant === "cream"} image={d.image} />            
+            <Reveal variant="scale" delay={150}>
+              <Placeholder variant={d.variant} label={d.heroLabel} height="clamp(340px, 95vw, 640px)" dark={d.variant === "cream"} image={d.image} parallax />
+            </Reveal>
            
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "40px 0 120px" }}>
+      <section style={{ padding: "40px 0 clamp(66px, 8.3vw, 120px)" }}>
         <div className="wrap">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48, gap: 24, flexWrap: "wrap" }}>
+          <Reveal className="head-row" style={{ marginBottom: 48 }}>
             <div>
               <div className="eyebrow">Catálogo</div>
               <h2 className="section-title">{d.catalogTitle}</h2>
@@ -150,11 +153,12 @@ const Division = ({ id, go }) => {
             <p style={{ maxWidth: 380, opacity: .75, fontSize: 15, lineHeight: 1.6 }}>
               {d.catalogDesc}
             </p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2, background: "var(--rule)", border: "1px solid var(--rule)" }}>
-            {d.items.map((it) => (
-              <article key={it.code} style={{ background: "var(--bg)", cursor: "pointer", transition: "background .3s ease" }}
+          <div className="grid-4-tight" style={{ border: "1px solid var(--rule)" }}>
+            {d.items.map((it, i) => (
+              <Reveal key={it.code} delay={(i % 4) * 80} variant="fade" style={{ background: "var(--bg)" }}>
+              <article style={{ background: "var(--bg)", cursor: "pointer", transition: "background .3s ease", height: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "color-mix(in oklab, var(--fg) 4%, var(--bg))"}
                 onMouseLeave={e => e.currentTarget.style.background = "var(--bg)"}>
                 <Placeholder variant={it.variant} label={it.name} height="220px" dark={it.variant === "cream"} />
@@ -166,51 +170,55 @@ const Division = ({ id, go }) => {
                   <p style={{ fontSize: 13, lineHeight: 1.55, opacity: .7, margin: 0 }}>{it.notes}</p>
                 </div>
               </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "80px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
         <div className="wrap">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 60, alignItems: "flex-start" }}>
-            <div>
+          <div className="split-1-2" style={{ alignItems: "flex-start" }}>
+            <Reveal>
               <div className="eyebrow">Aplicaciones</div>
-              <h2 className="serif" style={{ fontSize: 44, lineHeight: 1.05, margin: "16px 0", letterSpacing: "-.02em", fontWeight: 400 }}>
+              <h2 className="serif" style={{ fontSize: "clamp(34px, 4vw, 44px)", lineHeight: 1.05, margin: "16px 0", letterSpacing: "-.02em", fontWeight: 400 }}>
                 Donde cobra <em style={{ color: "var(--accent)" }}>vida</em>.
               </h2>
               <p style={{ fontSize: 15, lineHeight: 1.6, opacity: .8 }}>
                 Desarrollamos en conjunto con tus equipos de I+D, marketing y producción.
               </p>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+            </Reveal>
+            <div className="cols-2">
               {d.applications.map((a, i) => (
-                <div key={i} style={{
+                <Reveal key={i} delay={(i % 2) * 80 + Math.floor(i / 2) * 60} variant="fade" style={{
                   padding: "22px 0", borderBottom: "1px solid var(--rule)",
                   display: "flex", alignItems: "baseline", gap: 18,
                 }}>
                   <span className="mono" style={{ opacity: .5, width: 28 }}>{String(i + 1).padStart(2, "0")}</span>
                   <span className="serif" style={{ fontSize: 24, fontWeight: 500 }}>{a}</span>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "100px 0" }}>
+      <section style={{ padding: "clamp(55px, 6.9vw, 100px) 0" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 20 }}>Otras divisiones</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
-            {Object.entries(DIVISION_DATA).filter(([k]) => k !== id).map(([k, other]) => (
-              <article key={k} onClick={() => go(k)} style={{ cursor: "pointer" }}>
-               
-                <img src={other.image} alt={other.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div className="split-2" style={{ gap: 24 }}>
+            {Object.entries(DIVISION_DATA).filter(([k]) => k !== id).map(([k, other], i) => (
+              <Reveal key={k} delay={i * 120}>
+              <article className="card-lift" onClick={() => go(k)}>
+                <div className="ph" style={{ aspectRatio: "4 / 3" }}>
+                  <img className="ph-img" src={other.image} alt={other.name} loading="lazy" />
+                </div>
                 <div style={{ padding: "16px 4px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500 }}>{other.name}</h3>
                   <span className="mono" style={{ opacity: .5 }}>Ver ↗</span>
                 </div>
               </article>
+              </Reveal>
             ))}
           </div>
         </div>

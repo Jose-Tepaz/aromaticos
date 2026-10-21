@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Reveal } from "./motion.jsx";
 
 const Personalization = ({ go }) => {
   const [form, setForm] = useState({
@@ -25,7 +26,7 @@ const Personalization = ({ go }) => {
     width: "100%", padding: "14px 0",
     background: "transparent", border: "none",
     borderBottom: "1px solid var(--rule)",
-    color: "var(--fg)", fontFamily: "inherit", fontSize: 16,
+    color: "var(--fg)", fontFamily: "inherit", fontSize: 16, borderRadius: 0,
     outline: "none",
   };
   const labelStyle = {
@@ -34,7 +35,7 @@ const Personalization = ({ go }) => {
     opacity: .6, marginBottom: 4,
   };
   const chip = (active) => ({
-    padding: "8px 14px", borderRadius: 999,
+    padding: "11px 16px", borderRadius: 999,
     border: `1px solid ${active ? "var(--fg)" : "var(--rule)"}`,
     background: active ? "var(--fg)" : "transparent",
     color: active ? "var(--bg)" : "var(--fg)",
@@ -44,17 +45,17 @@ const Personalization = ({ go }) => {
 
   return (
     <div className="page">
-      <section style={{ padding: "60px 0 40px" }}>
+      <section style={{ padding: "clamp(33px, 4.2vw, 60px) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Personalización · Briefing</div>
-          <h1 className="serif" style={{
-            fontSize: "clamp(64px, 9vw, 140px)", lineHeight: .95,
+          <h1 className="serif stagger-in" style={{
+            fontSize: "clamp(40px, 9vw, 140px)", lineHeight: .95,
             letterSpacing: "-.03em", margin: "24px 0 0", fontWeight: 400,
           }}>
             Cuéntanos qué buscas,<br/>
             y nosotros lo <em style={{ color: "var(--accent)" }}>desarrollamos</em> contigo.
           </h1>
-          <p style={{ fontSize: 19, lineHeight: 1.5, maxWidth: 720, opacity: .85, marginTop: 32 }}>
+          <p className="stagger-in" style={{ "--d": "250ms", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.5, maxWidth: 720, opacity: .85, marginTop: 32 }}>
             Si tu proyecto requiere aromas, sabores o materias primas, en Aromáticos lo hacemos
             posible. Desarrollamos, conseguimos y personalizamos soluciones a la medida,
             adaptándonos a las necesidades específicas de cada cliente.
@@ -62,32 +63,32 @@ const Personalization = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "80px 0 40px" }}>
+      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Así trabajamos</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2, background: "var(--rule)" }}>
+          <div className="grid-4-tight">
             {[
               ["01", "Diagnóstico", "Sesión inicial para entender tu producto, marca e industria."],
               ["02", "Desarrollo", "Laboratorio trabaja muestras y perfiles hasta afinar la fórmula."],
               ["03", "Validación", "Pruebas de estabilidad, regulatorio y producción piloto."],
               ["04", "Entrega", "Producción a escala con trazabilidad y acompañamiento técnico."],
             ].map(([n, t, d], i) => (
-              <div key={i} style={{ background: "var(--bg)", padding: "36px 28px" }}>
+              <Reveal key={i} delay={i * 100} variant="fade" style={{ background: "var(--bg)", padding: "36px 28px" }}>
                 <div className="mono" style={{ opacity: .5, marginBottom: 20 }}>{n}</div>
                 <h3 className="serif" style={{ fontSize: 30, margin: "0 0 12px", fontWeight: 500 }}>{t}</h3>
                 <p style={{ fontSize: 14, lineHeight: 1.55, opacity: .75, margin: 0 }}>{d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "100px 0" }}>
+      <section style={{ padding: "clamp(55px, 6.9vw, 100px) 0" }}>
         <div className="wrap">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 80, alignItems: "flex-start" }}>
-            <div style={{ position: "sticky", top: 120 }}>
+          <div className="split-form">
+            <div className="sticky-side">
               <div className="eyebrow">Briefing rápido</div>
-              <h2 className="serif" style={{ fontSize: 56, lineHeight: 1, margin: "18px 0 24px", letterSpacing: "-.02em", fontWeight: 400 }}>
+              <h2 className="serif" style={{ fontSize: "clamp(38px, 4.5vw, 56px)", lineHeight: 1, margin: "18px 0 24px", letterSpacing: "-.02em", fontWeight: 400 }}>
                 Dinos por dónde <em style={{ color: "var(--accent)" }}>empezar</em>.
               </h2>
               <p style={{ fontSize: 15, lineHeight: 1.6, opacity: .8, marginBottom: 32 }}>
@@ -131,7 +132,7 @@ const Personalization = ({ go }) => {
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 40 }}>
+              <div className="fields-2" style={{ marginBottom: 40 }}>
                 <div>
                   <label style={labelStyle}>04 — Volumen estimado</label>
                   <select value={form.volumen} onChange={e => set("volumen", e.target.value)} style={inputStyle}>
@@ -148,7 +149,7 @@ const Personalization = ({ go }) => {
 
               <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 40, marginBottom: 40 }}>
                 <div className="mono" style={{ opacity: .6, marginBottom: 20 }}>Tus datos</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 32 }}>
+                <div className="fields-2" style={{ marginBottom: 32 }}>
                   <div>
                     <label style={labelStyle}>Nombre</label>
                     <input value={form.nombre} onChange={e => set("nombre", e.target.value)} style={inputStyle} placeholder="Tu nombre" />
@@ -162,7 +163,7 @@ const Personalization = ({ go }) => {
                 <input type="email" value={form.email} onChange={e => set("email", e.target.value)} style={inputStyle} placeholder="tu@empresa.com" />
               </div>
 
-              <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+              <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
                 <button type="submit" className="btn-primary">
                   {sent ? "Enviado ✓" : "Enviar briefing"} <span className="arrow">↗</span>
                 </button>

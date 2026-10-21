@@ -1,6 +1,10 @@
+import { useEffect, useState } from "react";
 import personalizationImage from "../public/imagenes/img-2.webp";
+import { Reveal, useParallax } from "./motion.jsx";
 
 export const Nav = ({ page, go }) => {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const items = [
     { id: "home", label: "Inicio" },
     { id: "fragancias", label: "Fragancias" },
@@ -10,25 +14,54 @@ export const Nav = ({ page, go }) => {
     { id: "contacto", label: "Contacto" },
   ];
   const logo = "/imagenes/AromaticosSello.png";
+
+  useEffect(() => { setOpen(false); }, [page]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <nav className="nav">
+    <nav className={`nav${scrolled ? " scrolled" : ""}${open ? " open" : ""}`}>
       <div className="nav-inner">
         <div className="nav-brand" onClick={() => go("home")}>
-          
-          <img src={logo} alt="Aromáticos" style={{ width: "82px", height: "auto" }} /> 
+          <img className="nav-logo" src={logo} alt="Aromáticos" />
         </div>
-        <div className="nav-links">
-          {items.map(it => (
+        <div className="nav-links" id="nav-links">
+          {items.map((it, i) => (
             <button
               key={it.id}
+              style={{ "--i": i }}
               className={page === it.id ? "active" : ""}
               onClick={() => go(it.id)}
             >{it.label}</button>
           ))}
+          <button className="btn-primary nav-panel-cta" onClick={() => go("personalizacion")}>
+            Personalizar <span className="arrow">↗</span>
+          </button>
         </div>
         <div className="nav-right">
           <span className="mono">EST. 1956</span>
           <button className="nav-cta" onClick={() => go("personalizacion")}>Personalizar</button>
+          <button
+            className="nav-toggle"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            aria-controls="nav-links"
+            onClick={() => setOpen(o => !o)}
+          >
+            <span /><span />
+          </button>
         </div>
       </div>
     </nav>
@@ -88,20 +121,21 @@ export const Footer = ({ go }) => {
   );
 };
 
-export const Placeholder = ({ variant = "", label, height = "auto", style = {}, dark = false, image = null }) => (
-  <div className={`ph ${variant}`} style={{ height, ...style }}>
-    <span className={`ph-label ${dark ? "dark" : ""}`}>{label}</span>
-    {image && <img src={image} alt={label} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-  </div>
-);
+export const Placeholder = ({ variant = "", label, height = "auto", style = {}, dark = false, image = null, parallax = false }) => {
+  const imgRef = useParallax(parallax && !!image);
+  return (
+    <div className={`ph ${variant}`} style={{ height, ...style }}>
+      <span className={`ph-label ${dark ? "dark" : ""}`}>{label}</span>
+      {image && <img ref={imgRef} className="ph-img" src={image} alt={label} loading="lazy" decoding="async" />}
+    </div>
+  );
+};
 
 export const PersonalCTA = ({ go }) => (
   <section style={{ padding: "120px 0" }}>
     <div className="wrap">
-      <div style={{
-        display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 60, alignItems: "center"
-      }}>
-        <div>
+      <div className="cta-grid">
+        <Reveal>
           <div className="eyebrow">¿Buscas algo personalizado?</div>
           <h2 className="serif" style={{
             fontSize: "clamp(44px, 5.5vw, 64px)",
@@ -118,21 +152,16 @@ export const PersonalCTA = ({ go }) => (
           <button className="btn-primary" onClick={() => go("personalizacion")}>
             Iniciar briefing <span className="arrow">↗</span>
           </button>
-        </div>
-        <div style={{ position: "relative" }}>
-          
-          <img src={personalizationImage} alt="Personalización" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          <div style={{
-            position: "absolute", bottom: -30, left: -30,
-            background: "var(--bg)", border: "1px solid var(--rule)",
-            padding: "20px 24px", maxWidth: 280,
-          }}>
+        </Reveal>
+        <Reveal variant="scale" delay={150} style={{ position: "relative" }}>
+          <img src={personalizationImage} alt="Personalización" loading="lazy" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }} />
+          <div className="cta-badge">
             <div className="mono" style={{ opacity: .6, marginBottom: 6 }}>Tiempo típico</div>
             <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>
               4–8 <span style={{ fontSize: 16, opacity: .6 }}>semanas</span>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   </section>

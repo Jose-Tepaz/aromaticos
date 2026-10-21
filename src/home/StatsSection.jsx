@@ -1,28 +1,25 @@
+import { CountUp, Line, Reveal } from "../motion.jsx";
+
 const STATS = [
-  ["70+",  "años de experiencia"],
-  ["1956", "año de fundación"],
-  ["4",    "industrias clave"],
-  ["ISO",  "9001 : 2015"],
+  [<CountUp to={70} suffix="+" />,                 "años de experiencia"],
+  [<CountUp from={1900} to={1956} />,              "año de fundación"],
+  [<CountUp to={4} />,                             "industrias clave"],
+  ["ISO",                                          "9001 : 2015"],
 ];
 
 const StatsSection = () => (
-  <section style={{ padding: "100px 0 40px" }}>
+  <section style={{ padding: "clamp(56px, 7vw, 100px) 0 40px" }}>
     <div className="wrap">
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: 40,
-        borderTop: "1px solid var(--rule)",
-        borderBottom: "1px solid var(--rule)",
-        padding: "32px 0",
-      }}>
+      <Line />
+      <div className="cols-4" style={{ padding: "32px 0" }}>
         {STATS.map(([k, v], i) => (
-          <div key={i}>
-            <div className="serif" style={{ fontSize: 54, lineHeight: 1, letterSpacing: "-.02em" }}>{k}</div>
+          <Reveal key={i} delay={i * 110}>
+            <div className="serif" style={{ fontSize: "clamp(40px, 5vw, 54px)", lineHeight: 1, letterSpacing: "-.02em" }}>{k}</div>
             <div className="mono" style={{ marginTop: 10, opacity: .6 }}>{v}</div>
-          </div>
+          </Reveal>
         ))}
       </div>
+      <Line />
     </div>
   </section>
 );

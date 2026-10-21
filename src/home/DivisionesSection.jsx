@@ -1,4 +1,5 @@
 import { Placeholder } from "../components.jsx";
+import { Reveal } from "../motion.jsx";
 
 const DIVISIONES = [
   {
@@ -31,16 +32,12 @@ const DIVISIONES = [
 ];
 
 const DivisionCard = ({ d, go }) => (
-  <article
-    onClick={() => go(d.id)}
-    style={{ cursor: "pointer", transition: "transform .35s ease" }}
-    onMouseEnter={e => e.currentTarget.style.transform = "translateY(-6px)"}
-    onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
-  >
+  <article className="card-lift" onClick={() => go(d.id)}>
     <Placeholder
       variant={d.variant}
       label={`${d.title} · ${d.variant === "cream" ? "flat lay" : "producto"}`}
-      height="440px"
+      height="clamp(280px, 90vw, 440px)"
+      parallax
       dark={d.variant === "cream"}
       image={d.image}
     />
@@ -57,9 +54,9 @@ const DivisionCard = ({ d, go }) => (
 );
 
 const DivisionesSection = ({ go }) => (
-  <section style={{ padding: "60px 0 100px" }}>
+  <section style={{ padding: "clamp(36px, 5vw, 60px) 0 clamp(56px, 8vw, 100px)" }}>
     <div className="wrap">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 40, gap: 24, flexWrap: "wrap" }}>
+      <Reveal className="head-row" style={{ marginBottom: 40 }}>
         <div>
           <div className="eyebrow">Nuestras divisiones</div>
           <h2 className="section-title">Conoce nuestras divisiones</h2>
@@ -68,10 +65,14 @@ const DivisionesSection = ({ go }) => (
           Fórmulas desarrolladas y producidas en México para industrias que requieren
           precisión, consistencia y una firma sensorial propia.
         </p>
-      </div>
+      </Reveal>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
-        {DIVISIONES.map(d => <DivisionCard key={d.id} d={d} go={go} />)}
+      <div className="cols-3">
+        {DIVISIONES.map((d, i) => (
+          <Reveal key={d.id} delay={i * 120}>
+            <DivisionCard d={d} go={go} />
+          </Reveal>
+        ))}
       </div>
     </div>
   </section>

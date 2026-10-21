@@ -1,13 +1,14 @@
 import { Placeholder } from "./components.jsx";
+import { Reveal } from "./motion.jsx";
 
 const Contact = ({ go }) => {
   return (
     <div className="page">
-      <section style={{ padding: "60px 0 40px" }}>
+      <section style={{ padding: "clamp(33px, 4.2vw, 60px) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Contacto</div>
-          <h1 className="serif" style={{
-            fontSize: "clamp(80px, 11vw, 180px)", lineHeight: .92,
+          <h1 className="serif stagger-in" style={{
+            fontSize: "clamp(48px, 11vw, 180px)", lineHeight: .92,
             letterSpacing: "-.03em", margin: "24px 0 0", fontWeight: 400,
           }}>
             Hablemos de tu <em style={{ color: "var(--accent)" }}>proyecto</em>.
@@ -15,9 +16,9 @@ const Contact = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "80px 0" }}>
+      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0" }}>
         <div className="wrap">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60 }}>
+          <div className="split-2">
             <div>
               <div style={{ display: "grid", gap: 24 }}>
                 {[
@@ -26,14 +27,14 @@ const Contact = ({ go }) => {
                   ["Materias primas", "Catálogo y cotizaciones", "mp@aromaticos.mx"],
                   ["Prensa", "Entrevistas y comunicación", "prensa@aromaticos.mx"],
                 ].map(([k, v, mail], i) => (
-                  <div key={i} style={{ padding: "28px 0", borderTop: "1px solid var(--rule)" }}>
+                  <Reveal key={i} delay={i * 80} style={{ padding: "28px 0", borderTop: "1px solid var(--rule)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
                       <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500 }}>{k}</h3>
                       <span className="mono" style={{ opacity: .5 }}>0{i+1}</span>
                     </div>
                     <p style={{ fontSize: 14, opacity: .75, margin: "0 0 10px" }}>{v}</p>
-                    <a href={`mailto:${mail}`} className="mono" style={{ textDecoration: "underline", textUnderlineOffset: 4 }}>{mail}</a>
-                  </div>
+                    <a href={`mailto:${mail}`} className="mono" style={{ textDecoration: "underline", textUnderlineOffset: 4, wordBreak: "break-all" }}>{mail}</a>
+                  </Reveal>
                 ))}
                 <div style={{ padding: "28px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
                   <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500, marginBottom: 10 }}>Teléfono</h3>
@@ -42,8 +43,8 @@ const Contact = ({ go }) => {
               </div>
             </div>
 
-            <div>
-              <Placeholder variant="cream" label="Mapa · Ciudad de México" height="380px" dark />
+            <Reveal variant="right" delay={100}>
+              <Placeholder variant="cream" label="Mapa · Ciudad de México" height="clamp(260px, 80vw, 380px)" dark />
               <div style={{ padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
                 <div className="mono" style={{ opacity: .6, marginBottom: 8 }}>Oficina central</div>
                 <div style={{ fontSize: 17, lineHeight: 1.55 }}>
@@ -60,7 +61,7 @@ const Contact = ({ go }) => {
               <button className="btn-primary" onClick={() => go("personalizacion")} style={{ marginTop: 20 }}>
                 Iniciar briefing <span className="arrow">↗</span>
               </button>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
