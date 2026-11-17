@@ -4,7 +4,6 @@ import { Reveal } from "../motion.jsx";
 const DIVISIONES = [
   {
     id: "fragancias",
-    num: "01",
     title: "Fragancias",
     tag: "Perfumería fina · Cosmética · Limpieza",
     variant: "navy",
@@ -13,7 +12,6 @@ const DIVISIONES = [
   },
   {
     id: "sabores",
-    num: "02",
     title: "Sabores",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     variant: "orange",
@@ -22,7 +20,6 @@ const DIVISIONES = [
   },
   {
     id: "materias",
-    num: "03",
     title: "Materias Primas",
     tag: "Industrial · Desarrollo · Investigación",
     variant: "cream",
@@ -32,7 +29,7 @@ const DIVISIONES = [
 ];
 
 const DivisionCard = ({ d, go }) => (
-  <article className="card-lift" onClick={() => go(d.id)}>
+  <article className="card-lift division-card" onClick={() => go(d.id)}>
     <Placeholder
       variant={d.variant}
       label={`${d.title} · ${d.variant === "cream" ? "flat lay" : "producto"}`}
@@ -42,10 +39,7 @@ const DivisionCard = ({ d, go }) => (
       image={d.image}
     />
     <div style={{ padding: "20px 4px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-        <span className="mono" style={{ opacity: .5 }}>{d.num}</span>
-        <span className="mono" style={{ opacity: .5 }}>Ver división ↗</span>
-      </div>
+      <div className="mono" style={{ textAlign: "right", opacity: .6, marginBottom: 10 }}>Ver división ↗</div>
       <h3 className="serif" style={{ fontSize: 40, margin: "0 0 10px", letterSpacing: "-.01em", fontWeight: 400 }}>{d.title}</h3>
       <div className="mono" style={{ opacity: .65, marginBottom: 14 }}>{d.tag}</div>
       <p style={{ fontSize: 14, lineHeight: 1.6, opacity: .82 }}>{d.desc}</p>
