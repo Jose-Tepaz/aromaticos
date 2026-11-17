@@ -1,6 +1,6 @@
 import { Placeholder } from "../components.jsx";
 import { Reveal } from "../motion.jsx";
-import esenciaImage from "../../public/imagenes/img-1.webp";
+const esenciaImage = "/imagenes/img-1.webp";
 
 const EsenciaSection = ({ go }) => (
   <section style={{ padding: "clamp(72px, 11vw, 140px) 0" }}>

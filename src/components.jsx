@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import personalizationImage from "../public/imagenes/img-2.webp";
+const personalizationImage = "/imagenes/img-2.webp";
 import { Reveal, useParallax } from "./motion.jsx";
 
 export const Nav = ({ page, go }) => {
