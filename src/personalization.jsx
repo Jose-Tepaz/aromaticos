@@ -1,3 +1,4 @@
+import { Puntos } from "./home/InnovacionSection.jsx";
 import { useState } from "react";
 import { Reveal } from "./motion.jsx";
 
@@ -40,12 +41,12 @@ const Personalization = ({ go }) => {
     background: active ? "var(--fg)" : "transparent",
     color: active ? "var(--bg)" : "var(--fg)",
     fontSize: 13, cursor: "pointer",
-    transition: "all .2s",
+    transition: "background .2s ease, color .2s ease, border-color .2s ease",
   });
 
   return (
     <div className="page">
-      <section style={{ padding: "clamp(33px, 4.2vw, 60px) 0 40px" }}>
+      <section style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Personalización · Briefing</div>
           <h1 className="serif stagger-in" style={{
@@ -63,27 +64,32 @@ const Personalization = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0 40px" }}>
+      <section style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Así trabajamos</div>
-          <div className="grid-4-tight">
+          <div className="paso-escalera">
             {[
-              ["01", "Diagnóstico", "Sesión inicial para entender tu producto, marca e industria."],
-              ["02", "Desarrollo", "Laboratorio trabaja muestras y perfiles hasta afinar la fórmula."],
-              ["03", "Validación", "Pruebas de estabilidad, regulatorio y producción piloto."],
-              ["04", "Entrega", "Producción a escala con trazabilidad y acompañamiento técnico."],
-            ].map(([n, t, d], i) => (
-              <Reveal key={i} delay={i * 100} variant="fade" style={{ background: "var(--bg)", padding: "36px 28px" }}>
-                <div className="mono" style={{ opacity: .5, marginBottom: 20 }}>{n}</div>
-                <h3 className="serif" style={{ fontSize: 30, margin: "0 0 12px", fontWeight: 500 }}>{t}</h3>
-                <p style={{ fontSize: 14, lineHeight: 1.55, opacity: .75, margin: 0 }}>{d}</p>
+              ["Diagnóstico", "Sesión inicial para entender tu producto, marca e industria."],
+              ["Desarrollo", "Laboratorio trabaja muestras y perfiles hasta afinar la fórmula."],
+              ["Validación", "Pruebas de estabilidad, regulatorio y producción piloto."],
+              ["Entrega", "Producción a escala con trazabilidad y acompañamiento técnico."],
+            ].map(([t, d], i) => (
+              <Reveal key={i} className="paso-card">
+                <div className="paso-top">
+                  <span className="mono">Paso {i + 1}</span>
+                  <Puntos n={i + 1} />
+                </div>
+                <div className="paso-bottom">
+                  <h3 className="serif paso-titulo">{t}</h3>
+                  <p className="p-card" style={{ margin: 0 }}>{d}</p>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "clamp(55px, 6.9vw, 100px) 0" }}>
+      <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="split-form">
             <div className="sticky-side">
@@ -95,7 +101,7 @@ const Personalization = ({ go }) => {
                 Tomamos máximo 5 minutos. Uno de nuestros desarrolladores de producto
                 te contactará dentro de 48 horas hábiles.
               </p>
-              <div style={{ border: "1px solid var(--rule)", padding: "20px 24px" }}>
+              <div className="caja-dato">
                 <div className="mono" style={{ opacity: .6, marginBottom: 8 }}>Respuesta típica</div>
                 <div className="serif" style={{ fontSize: 36, lineHeight: 1 }}>
                   48<span style={{ fontSize: 18, opacity: .6 }}> hrs hábiles</span>
@@ -105,26 +111,27 @@ const Personalization = ({ go }) => {
 
             <form onSubmit={submit}>
               <div style={{ marginBottom: 40 }}>
-                <label style={labelStyle}>01 — ¿Qué tipo de proyecto?</label>
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+                <div id="lbl-tipo" style={labelStyle}>01 — ¿Qué tipo de proyecto?</div>
+                <div role="group" aria-labelledby="lbl-tipo" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
                   {["Fragancia", "Sabor", "Materia prima", "No estoy seguro"].map(opt => (
-                    <span key={opt} style={chip(form.tipo === opt)} onClick={() => set("tipo", opt)}>{opt}</span>
+                    <button type="button" key={opt} aria-pressed={form.tipo === opt} style={chip(form.tipo === opt)} onClick={() => set("tipo", opt)}>{opt}</button>
                   ))}
                 </div>
               </div>
 
               <div style={{ marginBottom: 40 }}>
-                <label style={labelStyle}>02 — Industria</label>
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+                <div id="lbl-industria" style={labelStyle}>02 — Industria</div>
+                <div role="group" aria-labelledby="lbl-industria" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
                   {["Alimenticia", "Cosmética", "Farmacéutica", "Limpieza", "Otra"].map(opt => (
-                    <span key={opt} style={chip(form.industria === opt)} onClick={() => set("industria", opt)}>{opt}</span>
+                    <button type="button" key={opt} aria-pressed={form.industria === opt} style={chip(form.industria === opt)} onClick={() => set("industria", opt)}>{opt}</button>
                   ))}
                 </div>
               </div>
 
               <div style={{ marginBottom: 40 }}>
-                <label style={labelStyle}>03 — Descríbenos el proyecto</label>
+                <label htmlFor="pf-descripcion" style={labelStyle}>03 — Descríbenos el proyecto</label>
                 <textarea
+                  id="pf-descripcion" name="descripcion" autoComplete="off"
                   value={form.descripcion} onChange={e => set("descripcion", e.target.value)}
                   placeholder="Ej. Necesito una fragancia floral-amaderada para una línea de shampoos premium…"
                   rows={4}
@@ -134,14 +141,14 @@ const Personalization = ({ go }) => {
 
               <div className="fields-2" style={{ marginBottom: 40 }}>
                 <div>
-                  <label style={labelStyle}>04 — Volumen estimado</label>
-                  <select value={form.volumen} onChange={e => set("volumen", e.target.value)} style={inputStyle}>
+                  <label htmlFor="pf-volumen" style={labelStyle}>04 — Volumen estimado</label>
+                  <select id="pf-volumen" name="volumen" value={form.volumen} onChange={e => set("volumen", e.target.value)} style={inputStyle}>
                     {["Muestra / piloto", "100 – 1,000 kg / año", "1,000 – 5,000 kg / año", "5,000 – 20,000 kg / año", "20,000+ kg / año"].map(o => <option key={o}>{o}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label style={labelStyle}>05 — Plazo</label>
-                  <select value={form.plazo} onChange={e => set("plazo", e.target.value)} style={inputStyle}>
+                  <label htmlFor="pf-plazo" style={labelStyle}>05 — Plazo</label>
+                  <select id="pf-plazo" name="plazo" value={form.plazo} onChange={e => set("plazo", e.target.value)} style={inputStyle}>
                     {["Urgente (≤1 mes)", "1–3 meses", "3–6 meses", "Sin prisa"].map(o => <option key={o}>{o}</option>)}
                   </select>
                 </div>
@@ -151,16 +158,16 @@ const Personalization = ({ go }) => {
                 <div className="mono" style={{ opacity: .6, marginBottom: 20 }}>Tus datos</div>
                 <div className="fields-2" style={{ marginBottom: 32 }}>
                   <div>
-                    <label style={labelStyle}>Nombre</label>
-                    <input value={form.nombre} onChange={e => set("nombre", e.target.value)} style={inputStyle} placeholder="Tu nombre" />
+                    <label htmlFor="pf-nombre" style={labelStyle}>Nombre</label>
+                    <input id="pf-nombre" name="nombre" autoComplete="name" value={form.nombre} onChange={e => set("nombre", e.target.value)} style={inputStyle} placeholder="Tu nombre…" />
                   </div>
                   <div>
-                    <label style={labelStyle}>Empresa</label>
-                    <input value={form.empresa} onChange={e => set("empresa", e.target.value)} style={inputStyle} placeholder="Nombre de tu empresa" />
+                    <label htmlFor="pf-empresa" style={labelStyle}>Empresa</label>
+                    <input id="pf-empresa" name="empresa" autoComplete="organization" value={form.empresa} onChange={e => set("empresa", e.target.value)} style={inputStyle} placeholder="Nombre de tu empresa…" />
                   </div>
                 </div>
-                <label style={labelStyle}>Email</label>
-                <input type="email" value={form.email} onChange={e => set("email", e.target.value)} style={inputStyle} placeholder="tu@empresa.com" />
+                <label htmlFor="pf-email" style={labelStyle}>Email</label>
+                <input id="pf-email" name="email" type="email" autoComplete="email" inputMode="email" spellCheck={false} value={form.email} onChange={e => set("email", e.target.value)} style={inputStyle} placeholder="tu@empresa.com" />
               </div>
 
               <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>

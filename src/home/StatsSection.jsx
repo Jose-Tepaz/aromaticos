@@ -7,7 +7,7 @@ const STATS = [
 ];
 
 const StatsSection = () => (
-  <div className="hero-stats">
+  <section className="hero-stats">
     <div className="wrap">
       <Line />
       <div className="stats-grid" style={{ padding: "clamp(32px, 5vh, 52px) 0" }}>
@@ -20,7 +20,7 @@ const StatsSection = () => (
       </div>
       <Line />
     </div>
-  </div>
+  </section>
 );
 
 export default StatsSection;

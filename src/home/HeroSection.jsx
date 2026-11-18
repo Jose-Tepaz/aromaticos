@@ -1,47 +1,66 @@
-import StatsSection from "./StatsSection.jsx";
-
-const logo = "/imagenes/AromaticosColor.png";
-
 const d = (ms) => ({ "--d": `${ms}ms` });
 
-const HeroSection = ({ go }) => (
-  <section className="hero">
-    <div className="wrap hero-main">
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(20px, 3vh, 32px)", textAlign: "center" }}>
-        <img className="stagger-in" style={{ ...d(0), width: "clamp(200px, 25vw, 340px)", height: "auto" }} src={logo} alt="Aromáticos" />
+// Fotos del carrusel de fondo (se funden una a otra)
+const SLIDES = [
+  "/imagenes/division-fragancias.jpg",
+  "/imagenes/division-sabores.webp",
+  "/imagenes/division-materias.jpg",
+];
 
-        <div style={{ maxWidth: 1080 }}>
-          <div className="eyebrow stagger-in" style={d(150)}>Desde 1956 · Hecho en México</div>
-          <h1 className="serif stagger-in" style={{
-            ...d(280),
-            fontSize: "clamp(40px, 5.4vw, 78px)",
-            lineHeight: 1.04,
-            letterSpacing: "-.02em",
-            margin: "28px 0 32px",
-            fontWeight: 400,
-          }}>
+const HeroSection = ({ go }) => (
+    <section className="hero-photo">
+      <div className="hero-bg" aria-hidden="true">
+        {SLIDES.map((src, i) => (
+          <img
+            key={src}
+            className="hero-slide"
+            style={{ "--i": i }}
+            src={src}
+            alt=""
+            fetchpriority={i === 0 ? "high" : "auto"}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ))}
+        <div className="hero-shade" />
+      </div>
+
+      <div className="wrap hero-inner">
+        <div className="hero-meta mono stagger-in" style={d(700)}>
+          <span>Hecho en México</span><span className="hero-sep">//</span><span>Desde 1956</span>
+        </div>
+
+        <div className="hero-copy">
+          <h1 className="serif stagger-in hero-title" style={d(150)}>
             Desde 1956, creando
             <em className="em-draw" style={{ color: "var(--accent)" }}> aromas</em> y
             <em className="em-draw" style={{ color: "var(--accent)" }}> sabores</em> que dejan huella.
           </h1>
-          <p className="stagger-in p-lead" style={{ ...d(440), maxWidth: 680, margin: "0 auto 44px" }}>
-            Empresa mexicana líder en el desarrollo y comercialización de fragancias,
-            sabores y materias primas para las industrias alimenticia, cosmética,
-            farmacéutica, de limpieza y otros sectores.
-          </p>
-          <div className="hero-actions stagger-in" style={d(580)}>
-            <button className="btn-primary" onClick={() => go("personalizacion")}>
-              Cuéntanos tu proyecto <span className="arrow">↗</span>
-            </button>
-            <button className="btn-ghost" onClick={() => go("nosotros")}>
-              Conócenos <span className="arrow">↗</span>
-            </button>
+
+          <div className="hero-bottom">
+            <div>
+              <p className="hero-lead stagger-in" style={d(380)}>
+                Empresa mexicana líder en el desarrollo y comercialización de fragancias,
+                sabores y materias primas para las industrias alimenticia, cosmética,
+                farmacéutica, de limpieza y otros sectores.
+              </p>
+              <div className="hero-actions stagger-in" style={d(520)}>
+                <button className="btn-primary" onClick={() => go("personalizacion")}>
+                  Cuéntanos tu proyecto <span className="arrow">↗</span>
+                </button>
+                <button className="btn-ghost hero-ghost" onClick={() => go("nosotros")}>
+                  Conócenos <span className="arrow">↗</span>
+                </button>
+              </div>
+            </div>
+            <a className="hero-cue mono stagger-in" style={d(700)} href="#inicio-contenido"
+               onClick={(e) => { e.preventDefault(); document.getElementById("inicio-contenido")?.scrollIntoView({ behavior: "smooth" }); }}>
+              Descubre más <span className="hero-cue-arrow" aria-hidden="true">↓</span>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-    <StatsSection />
-  </section>
+    </section>
 );
 
 export default HeroSection;

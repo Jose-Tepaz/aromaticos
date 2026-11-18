@@ -7,37 +7,50 @@ const PASOS = [
   ["Producción",  "Escalamos con trazabilidad, consistencia y certificación ISO 9001."],
 ];
 
+// Cuatro puntos que se llenan según el paso (1 de 4, 2 de 4…)
+export const Puntos = ({ n }) => (
+  <span className="paso-puntos" aria-hidden="true">
+    {[1, 2, 3, 4].map((i) => <i key={i} className={i <= n ? "on" : ""} />)}
+  </span>
+);
+
 const InnovacionSection = ({ go }) => (
-  <section style={{ padding: "var(--section-y) 0", borderTop: "1px solid var(--rule)" }}>
+  <section style={{ padding: "var(--section-y-lg) 0 var(--section-y)", borderTop: "1px solid var(--rule)" }}>
     <div className="wrap">
-      <Reveal className="head-row" style={{ marginBottom: 40 }}>
-        <div>
-          <div className="eyebrow">Innovación y desarrollo</div>
-          <h2 className="section-title" style={{ marginBottom: 0 }}>
-            De la <em>idea</em> al producto final.
-          </h2>
-        </div>
-        <p className="p-intro" style={{ maxWidth: 460, textWrap: "balance" }}>
+      <Reveal className="paso-head">
+        <div className="eyebrow">Innovación y desarrollo</div>
+        <h2 className="section-title" style={{ margin: "18px 0 20px" }}>
+          De la <em>idea</em> al producto final.
+        </h2>
+        <p className="p-intro" style={{ maxWidth: 520, margin: "0 auto", textWrap: "balance" }}>
           Tradición que respalda y creatividad que desarrolla: formulamos contigo
           en un proceso claro, de 4 a 8 semanas.
         </p>
       </Reveal>
 
-      <div className="cols-4" style={{ gap: 32 }}>
+      {/* Tarjetas en escalera: cada paso baja un escalón */}
+      <div className="paso-escalera">
         {PASOS.map(([k, v], i) => (
-          <Reveal key={k} delay={i * 100} style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
-            <div className="mono" style={{ color: "var(--accent)", marginBottom: 14 }}>Paso {i + 1}</div>
-            <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: "0 0 10px", fontWeight: 400 }}>{k}</h3>
-            <p className="p-card" style={{ margin: 0 }}>{v}</p>
+          <Reveal key={k} className="paso-card" style={{ "--n": i }}>
+            <div className="paso-top">
+              <span className="mono">Paso {i + 1}</span>
+              <Puntos n={i + 1} />
+            </div>
+            <div className="paso-bottom">
+              <h3 className="serif paso-titulo">{k}</h3>
+              <p className="p-card" style={{ margin: 0 }}>{v}</p>
+            </div>
           </Reveal>
         ))}
+        {/* Llamada a la acción: en el hueco de la escalera, junto a las tarjetas */}
+        <Reveal className="paso-cta" delay={300}>
+          <p className="paso-cta-texto">¿Listo para empezar?</p>
+          <button className="btn-primary" onClick={() => go("personalizacion")}>
+            Conoce el proceso <span className="arrow">↗</span>
+          </button>
+        </Reveal>
       </div>
 
-      <Reveal delay={200} style={{ marginTop: 40 }}>
-        <button className="btn-ghost" onClick={() => go("personalizacion")}>
-          Conoce el proceso <span className="arrow">↗</span>
-        </button>
-      </Reveal>
     </div>
   </section>
 );

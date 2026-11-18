@@ -18,6 +18,12 @@ const App = () => {
 
   useSectionReveal(location.pathname);
 
+  // ?tono=arena | terracota cambia el tono cálido de las secciones de color (para comparar)
+  useEffect(() => {
+    const t = new URLSearchParams(location.search).get("tono");
+    if (t) document.documentElement.dataset.tono = t; else delete document.documentElement.dataset.tono;
+  }, [location.search]);
+
   const setTheme = (t) => {
     setThemeState(t);
     document.documentElement.setAttribute("data-theme", t);
@@ -47,8 +53,9 @@ const App = () => {
 
   return (
     <>
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <Nav page={page} go={go} />
-      <main>
+      <main id="contenido" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home go={go} />} />
           <Route path="/fragancias" element={<Division id="fragancias" go={go} />} />

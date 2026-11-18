@@ -1,35 +1,9 @@
 import { Placeholder } from "../components.jsx";
+import { useSearchParams } from "react-router-dom";
 import { Reveal } from "../motion.jsx";
+import { DIVISIONES } from "./divisionesData.js";
+import { DivisionesPaneles, DivisionesLista, DivisionesApiladas } from "./DivisionesVariantes.jsx";
 
-const DIVISIONES = [
-  {
-    id: "fragancias",
-    title: "Fragancias",
-    tag: "Perfumería fina · Cosmética · Limpieza",
-    variant: "navy",
-    image: "/imagenes/division-fragancias.jpg",
-    label: "Fragancias · evaluación olfativa",
-    desc: "Desarrollamos fragancias para perfumería, cosmética, cuidado personal y productos de limpieza, adaptadas a las necesidades e identidad de cada marca.",
-  },
-  {
-    id: "sabores",
-    title: "Sabores",
-    tag: "Alimenticia · Bebidas · Farmacéutica",
-    variant: "orange",
-    image: "/imagenes/division-sabores.webp",
-    label: "Sabores · desarrollo",
-    desc: "Creamos sabores para una amplia variedad de productos alimenticios y bebidas, adaptándonos a las necesidades de cada cliente y proyecto.",
-  },
-  {
-    id: "materias",
-    title: "Materias Primas",
-    tag: "Industrial · Desarrollo · Investigación",
-    variant: "cream",
-    image: "/imagenes/division-materias.jpg",
-    label: "Materias primas · laboratorio",
-    desc: "Ofrecemos materias primas para distintas aplicaciones industriales, respaldadas por nuestra experiencia y compromiso con la calidad.",
-  },
-];
 
 const DivisionCard = ({ d, go }) => (
   <article
@@ -59,7 +33,10 @@ const DivisionCard = ({ d, go }) => (
   </article>
 );
 
-const DivisionesSection = ({ go }) => (
+const DivisionesSection = ({ go }) => {
+  const [params] = useSearchParams();
+  const variante = params.get("divisiones");
+  return (
   <section style={{ padding: "var(--section-y) 0" }}>
     <div className="wrap">
       <Reveal className="head-row" style={{ marginBottom: 40 }}>
@@ -73,15 +50,24 @@ const DivisionesSection = ({ go }) => (
         </p>
       </Reveal>
 
-      <div className="cols-3">
-        {DIVISIONES.map((d, i) => (
-          <Reveal key={d.id} delay={i * 120}>
-            <DivisionCard d={d} go={go} />
-          </Reveal>
-        ))}
-      </div>
+      {variante === "paneles" ? (
+        <DivisionesPaneles go={go} />
+      ) : variante === "lista" ? (
+        <DivisionesLista go={go} />
+      ) : variante !== "cuadricula" ? (
+        <DivisionesApiladas go={go} />
+      ) : (
+        <div className="cols-3">
+          {DIVISIONES.map((d, i) => (
+            <Reveal key={d.id} delay={i * 120}>
+              <DivisionCard d={d} go={go} />
+            </Reveal>
+          ))}
+        </div>
+      )}
     </div>
   </section>
-);
+  );
+};
 
 export default DivisionesSection;

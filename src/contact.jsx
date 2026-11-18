@@ -24,7 +24,7 @@ const MapEmbed = () => (
 const Contact = ({ go }) => {
   return (
     <div className="page">
-      <section style={{ padding: "clamp(33px, 4.2vw, 60px) 0 40px" }}>
+      <section style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Contacto</div>
           <h1 className="serif stagger-in" style={{
@@ -36,7 +36,7 @@ const Contact = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0" }}>
+      <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="split-2">
             <div>

@@ -1,0 +1,102 @@
+/* ---------- Propuestas para "Nuestras divisiones" ---------- */
+
+/* B · Paneles verticales */
+.dv-paneles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.dv-panel {
+  position: relative; overflow: hidden; isolation: isolate; color: #fff; cursor: pointer;
+  height: clamp(520px, 76vh, 740px); display: flex; flex-direction: column; justify-content: space-between;
+  padding: 28px; transition: opacity .7s ease;
+}
+.dv-panel-img {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
+  transition: scale 1.4s cubic-bezier(.25, .6, .3, 1);
+}
+.dv-panel-shade {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgba(10, 18, 28, .82) 0%, rgba(10, 18, 28, .25) 55%, rgba(10, 18, 28, .3) 100%);
+}
+.dv-panel-top { opacity: .9; }
+.dv-panel-title { font-size: clamp(36px, 3.6vw, 56px); line-height: 1; margin: 0 0 14px; font-weight: 400; letter-spacing: -.02em; }
+.dv-panel-desc { font-size: 14.5px; line-height: 1.6; max-width: 34ch; margin: 0 0 22px; color: rgba(255, 255, 255, .88); }
+.dv-panel-cta {
+  display: inline-flex; gap: 8px; align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, .5); padding-bottom: 4px;
+  transition: border-color .6s ease, color .6s ease;
+}
+.dv-panel:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+@media (hover: hover) {
+  .dv-paneles:hover .dv-panel:not(:hover) { opacity: .55; }
+  .dv-panel:hover .dv-panel-img { scale: 1.06; }
+  .dv-panel:hover .dv-panel-cta { border-color: var(--accent); color: var(--accent); }
+}
+@media (max-width: 900px) {
+  .dv-paneles { grid-template-columns: 1fr; }
+  .dv-panel { height: clamp(420px, 70vh, 520px); }
+}
+
+/* A · Lista editorial con foto activa */
+.dv-lista { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.dv-lista-items { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.dv-lista-items li { border-bottom: 1px solid var(--rule); }
+.dv-fila { display: grid; grid-template-columns: 1fr; gap: 6px; width: 100%; text-align: left; padding: 28px 0; cursor: pointer; }
+.dv-fila-titulo {
+  font-size: clamp(40px, 5vw, 76px); line-height: 1; letter-spacing: -.02em; opacity: .38;
+  transition: opacity .7s ease, color .7s ease, transform .8s cubic-bezier(.25, .6, .3, 1);
+}
+.dv-fila-tag { opacity: .55; }
+.dv-fila-detalle { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .8s cubic-bezier(.25, .6, .3, 1); }
+.dv-fila-detalle > * { overflow: hidden; min-height: 0; }
+.dv-fila.activa .dv-fila-titulo { opacity: 1; color: var(--accent); transform: translateX(10px); }
+.dv-fila.activa .dv-fila-detalle { grid-template-rows: 1fr; }
+.dv-fila-desc { display: block; font-size: 15px; line-height: 1.65; max-width: 46ch; color: var(--fg-muted); padding-top: 14px; }
+.dv-fila-cta { display: inline-flex; gap: 8px; margin-top: 14px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+.dv-fila:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.dv-lista-visor { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #1b1f24; }
+.dv-visor-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.06;
+  transition: opacity 1s ease, scale 1.6s cubic-bezier(.25, .6, .3, 1);
+}
+.dv-visor-img.activa { opacity: 1; scale: 1; }
+@media (max-width: 900px) {
+  .dv-lista { grid-template-columns: 1fr; }
+  .dv-lista-visor { order: -1; aspect-ratio: 4 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dv-visor-img, .dv-fila-detalle, .dv-panel-img { transition: none; }
+}
+
+/* C · Tarjetas apiladas */
+.dv-stack { display: flex; flex-direction: column; gap: 36px; padding-bottom: 10vh; }
+.dv-stack-card {
+  --alto: clamp(420px, 62vh, 540px);
+  position: sticky; top: calc(112px + var(--i) * 24px);
+  height: var(--alto);
+  display: grid; grid-template-columns: 5fr 7fr;
+  overflow: hidden; border-radius: var(--radius-img);
+  background: var(--card-bg); color: var(--card-fg);
+  /* al ser cubierta por la siguiente, se encoge y se oscurece de forma gradual (--p lo calcula el scroll) */
+  transform-origin: 50% 0;
+  transform: scale(calc(1 - var(--p, 0) * .06));
+  filter: brightness(calc(1 - var(--p, 0) * .16));
+  will-change: transform;
+}
+.dv-s0 { --card-bg: #ebe4d9; --card-fg: var(--ink); --card-muted: rgba(26, 26, 26, .7); }
+.dv-s1 { --card-bg: var(--navy); --card-fg: var(--cream); --card-muted: rgba(247, 240, 228, .8); }
+.dv-s2 { --card-bg: #ebe4d9; --card-fg: var(--ink); --card-muted: rgba(26, 26, 26, .72); }
+.dv-stack-texto { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding: clamp(36px, 4.6vw, 76px); }
+.dv-stack-titulo { font-size: clamp(36px, 4vw, 60px); line-height: 1; margin: 0 0 10px; font-weight: 400; letter-spacing: -.02em; }
+.dv-stack-tag { font-family: var(--font-serif); font-size: clamp(18px, 1.6vw, 24px); color: var(--card-muted); margin: 0 0 22px; }
+.dv-stack-desc { font-size: 15px; line-height: 1.65; max-width: 40ch; margin: 0; color: var(--card-fg); opacity: .92; }
+.dv-stack-cta { display: inline-flex; gap: 8px; align-items: center; align-self: flex-start; font-family: var(--font-serif); font-size: 20px; padding-bottom: 4px; border-bottom: 1px solid currentColor; color: var(--card-fg); transition: opacity .4s ease; }
+.dv-stack-cta:hover { opacity: .7; }
+.dv-stack-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.dv-stack-foto { position: relative; cursor: pointer; padding: clamp(16px, 2vw, 32px); padding-left: 0; }
+.dv-stack-foto-in { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.dv-stack-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: scale 1.4s cubic-bezier(.25, .6, .3, 1); }
+@media (hover: hover) { .dv-stack-card:hover .dv-stack-foto img { scale: 1.04; } }
+@media (max-width: 900px) {
+  .dv-stack-card { position: static; height: auto; grid-template-columns: 1fr; transform: none; filter: none; }
+  .dv-stack-foto { order: -1; aspect-ratio: 4 / 3; padding: 14px 14px 0; }
+  .dv-stack-texto { gap: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .dv-stack-foto img { transition: none; } }

@@ -44,7 +44,7 @@ const INDUSTRIAS = [
 ];
 
 const IndustriasSection = () => (
-  <section style={{ padding: "var(--section-y) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+  <section className="industrias-azul" style={{ padding: "var(--section-y-lg) 0" }}>
     <div className="wrap">
       <div className="split-1-2" style={{ alignItems: "center" }}>
         <Reveal>

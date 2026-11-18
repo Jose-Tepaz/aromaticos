@@ -1,0 +1,124 @@
+/* ---------- Fondo de las secciones Industrias y CTA: el crema de siempre (cambiar con ?tono=humo | durazno | arena) ---------- */
+:root { --tono-bg: transparent; --tono-panel: rgba(255, 255, 255, .38); --tono-card: #ebe4d9; --tono-card-hover: #e3dbcd; }
+html[data-tono="humo"] { --tono-bg: #ebe8e2; --tono-panel: #ebe8e2; --tono-card: #f8f6f1; --tono-card-hover: #fdfcfa; }
+html[data-tono="durazno"] { --tono-bg: #f6d9c6; --tono-panel: #f6d9c6; }
+html[data-tono="arena"] { --tono-bg: #ece0c8; --tono-panel: #ece0c8; }
+
+/* ---------- Innovación: tarjetas alineadas ---------- */
+.paso-head { text-align: center; max-width: 820px; margin: 0 auto clamp(40px, 6vw, 72px); }
+.paso-head .eyebrow { justify-content: center; }
+.paso-head .eyebrow::before { display: none; }
+.paso-escalera {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch;
+  padding-bottom: 0;
+  position: relative;
+}
+/* Llamada a la acción centrada debajo de las tarjetas */
+.paso-cta { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; margin-top: clamp(28px, 4vw, 48px); }
+.paso-cta-texto { margin: 0; font-family: var(--font-serif); font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; letter-spacing: -.01em; }
+.paso-card {
+  --escalon: clamp(40px, 5vw, 72px);
+  min-height: clamp(280px, 26vw, 340px);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  padding: clamp(20px, 2vw, 28px);
+  background: var(--tono-card);
+  border: 1px solid rgba(26, 26, 26, .07);
+  transition: opacity .8s var(--reveal-ease) var(--d, 0ms), transform .8s var(--reveal-ease) var(--d, 0ms), background .6s ease, border-color .6s ease;
+}
+.paso-card:hover { background: var(--tono-card-hover); border-color: rgba(26, 26, 26, .18); }
+.paso-top { display: flex; justify-content: space-between; align-items: center; }
+.paso-puntos { display: inline-flex; gap: 4px; }
+.paso-puntos i { width: 7px; height: 7px; background: var(--fg); opacity: .22; transition: background .5s ease, opacity .5s ease; }
+.paso-puntos i.on { opacity: 1; }
+.paso-card:hover .paso-puntos i.on { background: var(--accent); }
+.paso-titulo { font-size: clamp(30px, 3vw, 42px); line-height: 1; margin: 0 0 14px; font-weight: 400; letter-spacing: -.02em; font-style: italic; }
+@media (max-width: 900px) {
+  .paso-escalera { grid-template-columns: repeat(2, 1fr); padding-bottom: 0; }
+  .paso-card { margin-top: 0; min-height: 260px; }
+}
+@media (max-width: 560px) {
+  .paso-cta { align-items: stretch; }
+  .paso-cta .btn-primary { justify-content: center; }
+  .paso-escalera { grid-template-columns: 1fr; gap: 14px; padding-bottom: 0; }
+  .paso-card { min-height: 220px; }
+}
+
+/* ---------- CTA: panel azul con foto ---------- */
+.cta-panel {
+  --bg: var(--cream); --fg: var(--ink); --accent: var(--navy); --rule: rgba(26, 26, 26, .16); --fg-muted: rgba(26, 26, 26, .76);
+  position: relative; color: var(--ink);
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 72px); align-items: center;
+  padding: 0;
+}
+.cta-panel .eyebrow { color: var(--ink); }
+.cta-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 clamp(24px, 3vw, 36px); padding: 0; list-style: none; }
+.cta-tags li { padding: 7px 14px; border-radius: 999px; background: var(--tono-card); border: 1px solid rgba(26, 26, 26, .08); font-size: 12px; letter-spacing: .04em; color: var(--ink); }
+.cta-panel .cta-time { border-left-color: rgba(26, 26, 26, .2); }
+.cta-panel .btn-primary { background: var(--orange); color: #fff; }
+.cta-photo { position: relative; aspect-ratio: 4 / 5; max-height: 600px; width: 100%; }
+.cta-photo-main { position: absolute; inset: 0; overflow: hidden; }
+.cta-photo-main .ph { height: 100%; }
+.cta-photo-main .ph-label { display: none; } /* sin etiqueta sobre la foto */
+@media (max-width: 900px) {
+  .cta-panel { grid-template-columns: 1fr; }
+  .cta-photo { aspect-ratio: 4 / 3; max-height: none; }
+  }
+
+/* ---------- Industrias sobre tono cálido ---------- */
+.industrias-azul {
+  --bg: var(--cream); --fg: var(--ink); --accent: var(--navy); --rule: rgba(26, 26, 26, .14); --fg-muted: rgba(26, 26, 26, .76);
+  background: var(--tono-bg); color: var(--ink);
+}
+.industrias-azul .cols-2-tight { gap: 16px; border: 0; }
+.industrias-azul .cols-2-tight > * { border: 0 !important; }
+.industrias-azul .industria-card {
+  background: var(--tono-card); border: 1px solid rgba(26, 26, 26, .07) !important;
+  padding: clamp(26px, 3vw, 40px) !important;
+  transition: opacity .8s var(--reveal-ease) var(--d, 0ms), transform .8s var(--reveal-ease) var(--d, 0ms), background .6s ease, border-color .6s ease;
+}
+.industrias-azul .industria-card:hover { background: var(--tono-card-hover); border-color: rgba(26, 26, 26, .18) !important; }
+.industrias-azul .industria-icon { color: var(--orange); opacity: .9; }
+.industrias-azul .industria-card:hover .industria-icon { opacity: 1; }
+.industrias-azul .industria-card:hover h3 { color: var(--navy); }
+.industrias-azul .industria-via { opacity: .6; }
+@media (max-width: 560px) { .industrias-azul .industria-card { padding: 26px 22px !important; } }
+
+/* ---------- Pie sobre el azul profundo de la marca ---------- */
+.footer-foto {
+  --fg: var(--cream); --fg-muted: rgba(247, 240, 228, .82); --rule: rgba(255, 255, 255, .18); --accent: var(--orange);
+  position: relative; isolation: isolate; overflow: hidden; color: var(--cream);
+  background: var(--navy); border-top: 0; margin-top: 0;
+  padding: clamp(72px, 10vh, 112px) 0 40px;
+}
+.footer-foto .footer-big { color: var(--cream); opacity: 1; font-size: clamp(48px, 9vw, 150px); margin-bottom: clamp(48px, 8vw, 96px); }
+.footer-foto .footer-big em { color: var(--orange); }
+.footer-foto h4 { opacity: .7; }
+.footer-sello { display: block; width: 64px; height: auto; margin-bottom: 20px; filter: brightness(0) invert(1); opacity: .95; }
+.footer-foto li { color: var(--cream); }
+.footer-link { color: var(--cream); font-size: 14px; opacity: .85; text-align: left; transition: opacity .3s ease, color .3s ease; }
+.footer-link:hover { opacity: 1; color: var(--cream-2); }
+.footer-foto .footer-bottom { border-top-color: rgba(255, 255, 255, .18); opacity: .75; }
+@media (max-width: 520px) { .footer-foto { padding-top: 64px; margin-top: 0; } }
+
+/* ---------- Uniformidad: radio de 10 px y tarjetas iguales en todas las páginas ---------- */
+.industria-card, .paso-card, .dv-panel, .dv-lista-visor, .map-embed, .cta-photo-main, .dv-stack-foto-in { border-radius: var(--radius-img); }
+.industrias-azul .industria-card { border-radius: var(--radius-img); }
+.dv-stack-card { border-radius: calc(var(--radius-img) + 4px); }
+
+/* Catálogo de las páginas de división: tarjetas separadas, mismo tono y radio que el inicio */
+.grid-4-tight { gap: 16px; border: 0 !important; }
+.grid-4-tight > * { outline: 0 !important; background: transparent !important; }
+.grid-4-tight .catalog-card { background: var(--tono-card) !important; border-radius: var(--radius-img); overflow: hidden; transition: background .5s ease; }
+.grid-4-tight .catalog-card:hover { background: var(--tono-card-hover) !important; }
+
+/* Caja informativa (p. ej. "Respuesta típica") */
+.caja-dato { background: var(--tono-card); border-radius: var(--radius-img); padding: 22px 26px; }
+/* Valores (Nosotros): 3 tarjetas */
+.paso-escalera.valores { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .paso-escalera.valores { grid-template-columns: 1fr; } }
+
+/* ---------- Nuestra esencia: foto vertical + texto ---------- */
+.esencia-split { align-items: center; }
+.esencia-foto { aspect-ratio: 4 / 5; max-height: 680px; width: 100%; }
+.esencia-foto .ph { height: 100%; }
+.esencia-foto .ph-label { display: none; }

@@ -1,3 +1,4 @@
+import { Puntos } from "./home/InnovacionSection.jsx";
 import { Placeholder, PersonalCTA } from "./components.jsx";
 import { Reveal } from "./motion.jsx";
 
@@ -13,7 +14,7 @@ const About = ({ go }) => {
 
   return (
     <div className="page">
-      <section style={{ padding: "clamp(33px, 4.2vw, 60px) 0 40px" }}>
+      <section style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Nuestra esencia</div>
           <h1 className="serif stagger-in" style={{
@@ -25,7 +26,7 @@ const About = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0" }}>
+      <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="split-2" style={{ alignItems: "center" }}>
             <Reveal>
@@ -53,26 +54,31 @@ const About = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(55px, 6.9vw, 100px) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+      <section style={{ padding: "var(--section-y-lg) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Nuestros valores</div>
-          <div className="cols-3-values">
+          <div className="paso-escalera valores">
             {[
               ["Tradición", "Siete décadas perfeccionando el arte de la perfumería y los sabores."],
               ["Innovación", "Laboratorios activos en I+D, con procesos modernos y trazables."],
               ["Cercanía", "Operamos como compañeros de desarrollo, no como proveedores."],
             ].map(([k, v], i) => (
-              <Reveal key={i} delay={i * 120}>
-                <div className="serif" style={{ fontSize: 64, lineHeight: 1, letterSpacing: "-.02em", marginBottom: 14 }}>0{i+1}</div>
-                <h3 className="serif" style={{ fontSize: 30, margin: "0 0 10px", fontWeight: 500 }}>{k}</h3>
-                <p style={{ fontSize: 15, lineHeight: 1.6, opacity: .8 }}>{v}</p>
+              <Reveal key={i} className="paso-card">
+                <div className="paso-top">
+                  <span className="mono">Valor {i + 1}</span>
+                  <Puntos n={i + 1} />
+                </div>
+                <div className="paso-bottom">
+                  <h3 className="serif paso-titulo">{k}</h3>
+                  <p className="p-card" style={{ margin: 0 }}>{v}</p>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "clamp(66px, 8.3vw, 120px) 0" }}>
+      <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <Reveal className="head-row" style={{ marginBottom: 60 }}>
             <div>
@@ -95,7 +101,7 @@ const About = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(66px, 8.3vw, 120px) 0", textAlign: "center" }}>
+      <section style={{ padding: "var(--section-y-lg) 0", textAlign: "center" }}>
         <Reveal className="wrap" style={{ maxWidth: 1100 }}>
           <div className="serif" style={{ fontSize: "clamp(28px, 4.2vw, 60px)", lineHeight: 1.2, fontStyle: "italic", letterSpacing: "-.01em" }}>
             "Una fragancia no se vende, se <em style={{ color: "var(--accent)", fontStyle: "italic" }}>recuerda</em>. Por eso cada fórmula que sale de nuestro laboratorio se trabaja como si fuera la primera — y la última."

@@ -92,7 +92,7 @@ const Division = ({ id, go }) => {
         <div className="wrap">
           <div className="crumbs" style={{ marginBottom: 40 }}>
             <div className="mono" style={{ opacity: .6 }}>
-              <span style={{ cursor: "pointer" }} onClick={() => go("home")}>Inicio</span>
+              <button type="button" style={{ cursor: "pointer", letterSpacing: "inherit", textTransform: "inherit" }} onClick={() => go("home")}>Inicio</button>
               <span style={{ margin: "0 10px", opacity: .5 }}>/</span>
               <span>División {d.num}</span>
               <span style={{ margin: "0 10px", opacity: .5 }}>/</span>
@@ -155,12 +155,10 @@ const Division = ({ id, go }) => {
             </p>
           </Reveal>
 
-          <div className="grid-4-tight" style={{ border: "1px solid var(--rule)" }}>
+          <div className="grid-4-tight">
             {d.items.map((it, i) => (
-              <Reveal key={it.code} delay={(i % 4) * 80} variant="fade" style={{ background: "var(--bg)" }}>
-              <article className="catalog-card" style={{ background: "var(--bg)", cursor: "pointer", transition: "background .3s ease", height: "100%" }}
-                onMouseEnter={e => e.currentTarget.style.background = "color-mix(in oklab, var(--fg) 4%, var(--bg))"}
-                onMouseLeave={e => e.currentTarget.style.background = "var(--bg)"}>
+              <Reveal key={it.code} delay={(i % 4) * 80} variant="fade">
+              <article className="catalog-card" style={{ cursor: "pointer", height: "100%" }}>
                 <Placeholder variant={it.variant} label={it.name} height="220px" dark={it.variant === "cream"} />
                 <div className="catalog-body" style={{ padding: "20px 18px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
@@ -176,7 +174,7 @@ const Division = ({ id, go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(44px, 5.6vw, 80px) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+      <section style={{ padding: "var(--section-y-lg) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
         <div className="wrap">
           <div className="split-1-2" style={{ alignItems: "flex-start" }}>
             <Reveal>
@@ -203,13 +201,13 @@ const Division = ({ id, go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(55px, 6.9vw, 100px) 0" }}>
+      <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 20 }}>Otras divisiones</div>
           <div className="split-2" style={{ gap: 24 }}>
             {Object.entries(DIVISION_DATA).filter(([k]) => k !== id).map(([k, other], i) => (
               <Reveal key={k} delay={i * 120}>
-              <article className="card-lift division-card" onClick={() => go(k)}>
+              <article className="card-lift division-card" role="link" tabIndex={0} aria-label={other.name} onClick={() => go(k)} onKeyDown={(e) => { if (e.key === "Enter") go(k); }}>
                 <div className="ph" style={{ aspectRatio: "4 / 3" }}>
                   <img className="ph-img" src={other.image} alt={other.name} loading="lazy" />
                 </div>

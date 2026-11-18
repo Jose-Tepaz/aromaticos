@@ -23,7 +23,7 @@
   --section-y-lg: clamp(64px, 9vw, 128px);
   --title-section: clamp(34px, 4.6vw, 56px);
   --title-card: 32px;
-  --radius-img: 2px;
+  --radius-img: 10px;
   --reveal-y: 80px;
   --reveal-ease: cubic-bezier(.25,.46,.45,.94);
   --fg-muted: color-mix(in oklab, var(--fg) 80%, transparent);
@@ -471,15 +471,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .timeline-row:first-child { border-top: 1px solid var(--rule); }
 .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
 /* Portada: ocupa la pantalla; contenido centrado y cifras en la parte inferior */
-.hero {
-  min-height: calc(100svh - 138px); /* 138px = altura del menú */
-  display: flex; flex-direction: column;
-  padding-top: clamp(32px, 5vh, 64px);
-}
-.hero-main { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding-bottom: clamp(32px, 5vh, 64px); }
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
 .stats-grid > * + * { border-left: 1px solid var(--rule); }
-.hero-stats { padding: clamp(24px, 4vh, 48px) 0 clamp(48px, 7vh, 88px); }
+.hero-stats { padding: clamp(72px, 12vh, 140px) 0 clamp(24px, 4vh, 48px); }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 .crumbs { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 
@@ -555,7 +549,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .cols-2-tight > :nth-child(odd) { border-right: 0; }
   .cols-2-tight > :nth-last-child(2) { border-bottom: 1px solid var(--rule); }
   .fields-2 { gap: 28px; }
-  .hero { min-height: 0; }
   .stats-grid { grid-template-columns: 1fr; gap: 28px; }
   .stats-grid > * + * { border-left: 0; }
   .hero-stats { padding-top: 56px; }
@@ -609,3 +602,98 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .grid-4-tight { grid-template-columns: 1fr; }
   .grid-4-tight .ph { height: 160px !important; }
 }
+
+/* ---------- Accesibilidad y detalles (auditoría web-design-guidelines) ---------- */
+/* Foco visible solo con teclado */
+a:focus-visible, button:focus-visible, [role="link"]:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+}
+/* Enlace para saltar al contenido (visible solo al enfocarlo con teclado) */
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 10px 16px; background: var(--fg); color: var(--bg); transform: translateY(-160%); transition: transform .25s ease; }
+.skip-link:focus { transform: none; }
+main:focus { outline: none; }
+/* Evita el retraso de doble toque en móvil */
+a, button, [role="link"], select, summary { touch-action: manipulation; }
+/* Cifras que no "bailan" al contar */
+.serif, .mono { font-variant-numeric: tabular-nums; }
+/* Títulos sin palabras sueltas */
+h1, h2, h3 { text-wrap: balance; }
+.nav-brand { background: none; border: 0; padding: 0; }
+
+/* ---------- Portada con foto (inicio) ---------- */
+.hero-photo {
+  position: sticky; top: 0; z-index: 0; isolation: isolate; color: #fff; overflow: hidden;
+  min-height: max(640px, 100svh);
+  margin-top: calc(-1 * var(--nav-h, 100px)); /* queda debajo del menú transparente */
+  display: flex;
+}
+.hero-bg { position: absolute; inset: 0; z-index: -1; background: #1b1f24; }
+.hero-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+  animation: hero-fade 18s linear infinite, hero-zoom 18s ease-out infinite;
+  animation-delay: calc(var(--i) * 6s - 1.1s);
+}
+.hero-slide:first-of-type { opacity: 1; }
+@keyframes hero-fade { 0% { opacity: 0; } 6% { opacity: 1; } 33% { opacity: 1; } 39% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes hero-zoom { 0% { transform: scale(1.1); } 40% { transform: scale(1); } 100% { transform: scale(1); } }
+.hero-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10,18,28,.78) 0%, rgba(10,18,28,.46) 55%, rgba(10,18,28,.42) 100%),
+    linear-gradient(to top, rgba(10,18,28,.62) 0%, transparent 50%);
+}
+.hero-inner { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(20px, 4vh, 48px); padding-top: calc(var(--nav-h, 100px) + 24px); padding-bottom: clamp(28px, 6vh, 64px); width: 100%; box-sizing: border-box; }
+.hero-meta { align-self: flex-end; display: flex; gap: 14px; margin-bottom: auto; margin-top: auto; opacity: .95; }
+.hero-sep { opacity: .6; }
+.hero-title { font-size: clamp(42px, 6vw, 96px); line-height: 1.02; letter-spacing: -.025em; font-weight: 400; margin: 0; max-width: 17ch; text-wrap: balance; text-shadow: 0 2px 24px rgba(0,0,0,.25); }
+.hero-title em { font-style: italic; }
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: clamp(20px, 4vh, 40px); }
+.hero-lead { font-size: clamp(15px, 1.5vw, 18px); line-height: 1.6; max-width: 560px; margin: 0 0 28px; color: rgba(255,255,255,.88); }
+.hero-photo .hero-actions { justify-content: flex-start; }
+.hero-ghost { border-color: rgba(255,255,255,.55); color: #fff; }
+.hero-ghost:hover { border-color: #fff; background: rgba(255,255,255,.12); }
+.hero-cue { display: inline-flex; align-items: center; gap: 10px; color: #fff; white-space: nowrap; padding-bottom: 6px; }
+.hero-cue-arrow { display: inline-block; animation: cue-bob 2.4s ease-in-out infinite; }
+@keyframes cue-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+/* Menú transparente y en blanco sobre la foto; vuelve a su estilo al bajar */
+.nav.over-hero { background: transparent; border-bottom-color: transparent; backdrop-filter: none; box-shadow: none; color: #fff; }
+.nav.over-hero .nav-links button, .nav.over-hero .nav-right .mono { color: #fff; }
+.nav.over-hero .nav-toggle { color: #fff; }
+/* Sin banda oscura detrás del menú: la legibilidad se logra con una sombra suave en el texto */
+.nav.over-hero .nav-links button, .nav.over-hero .nav-right .mono { text-shadow: 0 1px 14px rgba(0, 0, 0, .45); }
+.nav.over-hero .nav-logo { filter: brightness(0) invert(1) drop-shadow(0 1px 8px rgba(0, 0, 0, .35)); }
+@media (max-width: 900px) {
+  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .hero-cue { display: none; }
+  .hero-meta { display: none; }
+  .hero-title { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { animation: none; }
+  .hero-slide:not(:first-of-type) { display: none; }
+  .hero-cue-arrow { animation: none; }
+}
+
+/* ---------- Superposición: el resto de la página sube sobre la portada ---------- */
+.page-rest {
+  position: relative; z-index: 2;
+  /* fondo opaco + marca de agua (isotipo al 5 %) fija, igual que en el resto del sitio */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--bg) 95%, transparent), color-mix(in oklab, var(--bg) 95%, transparent)),
+    url("/imagenes/AromaticosIsotipo.png");
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: scroll, fixed;
+  background-size: auto, min(78vw, 1100px) auto;
+  background-position: 0 0, right -8vw bottom -10vh;
+}
+
+/* La portada se oscurece y se aleja un poco mientras la página sube sobre ella (solo navegadores con scroll-timeline) */
+@supports (animation-timeline: scroll()) {
+  .hero-bg { animation: hero-recede linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  .hero-inner { animation: hero-lift linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+  @keyframes hero-recede { to { filter: brightness(.5); transform: scale(1.05); } }
+  @keyframes hero-lift { to { transform: translateY(-48px); } }
+}
+@media (prefers-reduced-motion: reduce) { .hero-bg, .hero-inner { animation: none !important; } }
+

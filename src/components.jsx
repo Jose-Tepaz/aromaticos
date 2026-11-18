@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal, useParallax } from "./motion.jsx";
 
 export const Nav = ({ page, go }) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef(null);
   const items = [
     { id: "home", label: "Inicio" },
     { id: "fragancias", label: "Fragancias" },
@@ -15,6 +16,19 @@ export const Nav = ({ page, go }) => {
   const logo = "/imagenes/AromaticosSello.png";
 
   useEffect(() => { setOpen(false); }, [page]);
+
+  // Altura del menú sin encoger: la portada con foto se sube esa altura para quedar debajo del menú transparente
+  useEffect(() => {
+    const set = () => {
+      if (navRef.current && window.scrollY <= 8) {
+        document.documentElement.style.setProperty("--nav-h", `${navRef.current.offsetHeight}px`);
+      }
+    };
+    set();
+    window.addEventListener("resize", set);
+    return () => window.removeEventListener("resize", set);
+  }, [page]);
+
 
   useEffect(() => {
     // Histéresis: al encogerse, el menú reduce la altura de la página y el navegador
@@ -33,11 +47,11 @@ export const Nav = ({ page, go }) => {
   }, [open]);
 
   return (
-    <nav className={`nav${scrolled ? " scrolled" : ""}${open ? " open" : ""}`}>
+    <nav ref={navRef} className={`nav${scrolled ? " scrolled" : ""}${open ? " open" : ""}${page === "home" && !scrolled && !open ? " over-hero" : ""}`}>
       <div className="nav-inner">
-        <div className="nav-brand" onClick={() => go("home")}>
-          <img className="nav-logo" src={logo} alt="Aromáticos" />
-        </div>
+        <button type="button" className="nav-brand" aria-label="Aromáticos, ir al inicio" onClick={() => go("home")}>
+          <img className="nav-logo" src={logo} alt="" width="100" height="101" />
+        </button>
         <div className="nav-links" id="nav-links">
           {items.map((it, i) => (
             <button
@@ -70,9 +84,12 @@ export const Nav = ({ page, go }) => {
 };
 
 export const Footer = ({ go }) => {
+  const link = (id, label) => (
+    <li><button type="button" className="footer-link" onClick={() => go(id)}>{label}</button></li>
+  );
   return (
-    <footer className="footer">
-      <div className="wrap">
+    <footer className="footer footer-foto">
+      <div className="wrap footer-inner">
         <div className="footer-big serif">
           Hecho en <em>México</em>,<br/>
           desde <em>1956</em>.
@@ -80,27 +97,28 @@ export const Footer = ({ go }) => {
 
         <div className="footer-grid">
           <div>
+            <img className="footer-sello" src="/imagenes/AromaticosSello.png" alt="" width="64" height="65" loading="lazy" />
             <h4>Aromáticos S.A. de C.V.</h4>
             <p className="p-card" style={{ maxWidth: 380 }}>
               Desarrollo y comercialización de fragancias, sabores y materias primas
               para las industrias alimenticia, cosmética, farmacéutica y de limpieza.
             </p>
-            <div className="mono" style={{ marginTop: 14, opacity: .6 }}>ISO 9001:2015 · Certificados</div>
+            <div className="mono" style={{ marginTop: 14, opacity: .65 }}>ISO 9001:2015 · Certificados</div>
           </div>
           <div>
             <h4>Divisiones</h4>
             <ul>
-              <li><a onClick={() => go("fragancias")}>Fragancias</a></li>
-              <li><a onClick={() => go("sabores")}>Sabores</a></li>
-              <li><a onClick={() => go("materias")}>Materias primas</a></li>
+              {link("fragancias", "Fragancias")}
+              {link("sabores", "Sabores")}
+              {link("materias", "Materias primas")}
             </ul>
           </div>
           <div>
             <h4>Compañía</h4>
             <ul>
-              <li><a onClick={() => go("nosotros")}>Nuestra esencia</a></li>
-              <li><a onClick={() => go("personalizacion")}>Personalización</a></li>
-              <li><a onClick={() => go("contacto")}>Contacto</a></li>
+              {link("nosotros", "Nuestra esencia")}
+              {link("personalizacion", "Personalización")}
+              {link("contacto", "Contacto")}
             </ul>
           </div>
           <div>
@@ -135,43 +153,49 @@ export const Placeholder = ({ variant = "", label, height = "auto", style = {}, 
 export const PersonalCTA = ({ go }) => (
   <section style={{ padding: "var(--section-y-lg) 0" }}>
     <div className="wrap">
-      <div className="cta-grid">
+      <div className="cta-panel">
         <Reveal>
           <div className="eyebrow">¿Buscas algo personalizado?</div>
           <h2 className="serif" style={{
             fontSize: "var(--title-section)",
-            lineHeight: 1.05, margin: "20px 0 28px", letterSpacing: "-.02em", fontWeight: 400,
+            lineHeight: 1.05, margin: "20px 0 24px", letterSpacing: "-.02em", fontWeight: 400,
           }}>
             Si tu proyecto requiere <em style={{ color: "var(--accent)" }}>aromas</em>,
             <em style={{ color: "var(--accent)" }}> sabores</em> o materias primas,
             en Aromáticos <em>lo hacemos posible</em>.
           </h2>
-          <p className="p-lead" style={{ maxWidth: 520, marginBottom: 40, lineHeight: 1.75 }}>
+          <p className="p-lead" style={{ maxWidth: 520, marginBottom: 28, lineHeight: 1.75 }}>
             Desarrollamos, conseguimos y personalizamos soluciones a la medida,
             adaptándonos a las necesidades específicas de cada cliente.
             Cuéntanos qué buscas y nosotros lo desarrollamos contigo.
           </p>
+          <ul className="cta-tags" aria-label="Lo que desarrollamos">
+            <li>Aromas</li><li>Sabores</li><li>Materias primas</li><li>Desarrollo a la medida</li>
+          </ul>
           <div className="cta-actions">
             <button className="btn-primary" onClick={() => go("personalizacion")}>
               Cuéntanos tu proyecto <span className="arrow">↗</span>
             </button>
             <div className="cta-time">
-              <div className="mono" style={{ opacity: .6, marginBottom: 6 }}>Tiempo típico</div>
+              <div className="mono" style={{ opacity: .7, marginBottom: 6 }}>Tiempo típico</div>
               <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>
-                4–8 <span style={{ fontSize: 16, opacity: .6 }}>semanas</span>
+                4–8 <span style={{ fontSize: 16, opacity: .7 }}>semanas</span>
               </div>
             </div>
           </div>
         </Reveal>
-        <Reveal variant="scale" delay={150}>
-          <Placeholder
-            variant="navy"
-            label="Preparación de esencias"
-            height="auto"
-            style={{ aspectRatio: "4 / 5", maxHeight: 640, width: "100%" }}
-            image="/imagenes/personalizacion.webp"
-            solidLabel
-          />
+        <Reveal delay={150}>
+          <div className="cta-photo">
+            <div className="cta-photo-main">
+              <Placeholder
+                  variant="navy"
+                  label="Preparación de esencias"
+                  height="100%"
+                  image="/imagenes/personalizacion.webp"
+                  solidLabel
+              />
+            </div>
+          </div>
         </Reveal>
       </div>
     </div>
