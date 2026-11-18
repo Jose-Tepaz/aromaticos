@@ -466,7 +466,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .sticky-side  { position: sticky; top: 120px; }
 .cta-actions  { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
 .cta-time     { padding-left: 40px; border-left: 1px solid var(--rule); }
-.cta-badge    { position: absolute; bottom: -30px; left: -30px; max-width: 280px; padding: 20px 24px; background: var(--bg); border: 1px solid var(--rule); }
 .timeline-row { display: grid; grid-template-columns: 120px 1fr 1fr 100px; gap: 40px; padding: 32px 0; align-items: baseline; border-bottom: 1px solid var(--rule); }
 .timeline-row:first-child { border-top: 1px solid var(--rule); }
 .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
