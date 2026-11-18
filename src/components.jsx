@@ -80,7 +80,7 @@ export const Footer = ({ go }) => {
         <div className="footer-grid">
           <div>
             <h4>Aromáticos S.A. de C.V.</h4>
-            <p style={{ fontSize: 14, lineHeight: 1.6, maxWidth: 380, opacity: .8 }}>
+            <p className="p-card" style={{ maxWidth: 380 }}>
               Desarrollo y comercialización de fragancias, sabores y materias primas
               para las industrias alimenticia, cosmética, farmacéutica y de limpieza.
             </p>
@@ -138,19 +138,19 @@ export const PersonalCTA = ({ go }) => (
         <Reveal>
           <div className="eyebrow">¿Buscas algo personalizado?</div>
           <h2 className="serif" style={{
-            fontSize: "clamp(44px, 5.5vw, 64px)",
+            fontSize: "var(--title-section)",
             lineHeight: 1, margin: "20px 0 28px", letterSpacing: "-.02em", fontWeight: 400,
           }}>
             Si tu proyecto requiere <em style={{ color: "var(--accent)" }}>aromas</em>,<em style={{ fontStyle: "italic" }}> sabores</em> o materias primas,
             en Aromáticos <em style={{ color: "var(--accent)" }}>lo hacemos posible</em>.
           </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.6, maxWidth: 520, opacity: .8, marginBottom: 36 }}>
+          <p className="p-lead" style={{ maxWidth: 520, marginBottom: 36 }}>
             Desarrollamos, conseguimos y personalizamos soluciones a la medida,
             adaptándonos a las necesidades específicas de cada cliente.
             Cuéntanos qué buscas y nosotros lo desarrollamos contigo.
           </p>
           <button className="btn-primary" onClick={() => go("personalizacion")}>
-            Iniciar briefing <span className="arrow">↗</span>
+            Cuéntanos tu proyecto <span className="arrow">↗</span>
           </button>
         </Reveal>
         <Reveal variant="scale" delay={150} style={{ position: "relative" }}>

@@ -59,7 +59,7 @@ const Contact = ({ go }) => {
                 <div style={{ fontSize: 15, opacity: .85 }}>Lunes a Viernes · 9:00 – 18:00</div>
               </div>
               <button className="btn-primary" onClick={() => go("personalizacion")} style={{ marginTop: 20 }}>
-                Iniciar briefing <span className="arrow">↗</span>
+                Cuéntanos tu proyecto <span className="arrow">↗</span>
               </button>
             </Reveal>
           </div>

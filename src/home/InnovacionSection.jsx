@@ -14,10 +14,10 @@ const InnovacionSection = ({ go }) => (
         <div>
           <div className="eyebrow">Innovación y desarrollo</div>
           <h2 className="section-title" style={{ marginBottom: 0 }}>
-            Del <em>briefing</em> al producto final.
+            De la <em>idea</em> al producto final.
           </h2>
         </div>
-        <p style={{ maxWidth: 360, opacity: .75, fontSize: 15, lineHeight: 1.6 }}>
+        <p className="p-intro" style={{ maxWidth: 460, textWrap: "balance" }}>
           Tradición que respalda y creatividad que desarrolla: formulamos contigo
           en un proceso claro, de 4 a 8 semanas.
         </p>
@@ -28,7 +28,7 @@ const InnovacionSection = ({ go }) => (
           <Reveal key={k} delay={i * 100} style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
             <div className="mono" style={{ color: "var(--accent)", marginBottom: 14 }}>Paso {i + 1}</div>
             <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: "0 0 10px", fontWeight: 400 }}>{k}</h3>
-            <p style={{ fontSize: 14, lineHeight: 1.6, opacity: .75, margin: 0 }}>{v}</p>
+            <p className="p-card" style={{ margin: 0 }}>{v}</p>
           </Reveal>
         ))}
       </div>

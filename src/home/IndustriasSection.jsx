@@ -14,7 +14,7 @@ const IndustriasSection = () => (
         <Reveal>
           <div className="eyebrow">Industrias</div>
           <h2 className="section-title" style={{ marginBottom: 0 }}>
-            Nuestra experiencia en cada <em style={{ color: "var(--accent)" }}>industria</em>.
+            Soluciones para diferentes <em style={{ color: "var(--accent)" }}>industrias</em>.
           </h2>
         </Reveal>
 
@@ -24,7 +24,7 @@ const IndustriasSection = () => (
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
                 <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: 0, fontWeight: 400 }}>{k}</h3>
               </div>
-              <p style={{ fontSize: 14, lineHeight: 1.55, opacity: .75, margin: 0 }}>{v}</p>
+              <p className="p-card" style={{ margin: 0 }}>{v}</p>
             </Reveal>
           ))}
         </div>

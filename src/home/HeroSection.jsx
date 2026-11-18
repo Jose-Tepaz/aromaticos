@@ -1,43 +1,46 @@
+import StatsSection from "./StatsSection.jsx";
+
 const logo = "/imagenes/AromaticosColor.png";
 
 const d = (ms) => ({ "--d": `${ms}ms` });
 
 const HeroSection = ({ go }) => (
-  <section style={{ padding: "var(--section-y-sm) 0 var(--section-y)" }}>
-    <div className="wrap">
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32, textAlign: "center" }}>
-        <img className="stagger-in" style={{ ...d(0), width: "clamp(170px, 22vw, 250px)", height: "auto" }} src={logo} alt="Aromáticos" />
+  <section className="hero">
+    <div className="wrap hero-main">
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(20px, 3vh, 32px)", textAlign: "center" }}>
+        <img className="stagger-in" style={{ ...d(0), width: "clamp(240px, 32vw, 440px)", height: "auto" }} src={logo} alt="Aromáticos" />
 
-        <div style={{ maxWidth: 920 }}>
+        <div style={{ maxWidth: 1080 }}>
           <div className="eyebrow stagger-in" style={d(150)}>Desde 1956 · Hecho en México</div>
           <h1 className="serif stagger-in" style={{
             ...d(280),
-            fontSize: "clamp(40px, 7vw, 62px)",
+            fontSize: "clamp(40px, 5.4vw, 78px)",
             lineHeight: .98,
             letterSpacing: "-.02em",
-            margin: "24px 0 28px",
+            margin: "20px 0 24px",
             fontWeight: 400,
           }}>
-            Más de siete décadas transformando emociones en
+            Desde 1956, creando
             <em className="em-draw" style={{ color: "var(--accent)" }}> aromas</em> y
-            <em style={{ fontStyle: "italic" }}> sabores</em>.
+            <em className="em-draw" style={{ color: "var(--accent)" }}> sabores</em> que dejan huella.
           </h1>
-          <p className="stagger-in" style={{ ...d(440), fontSize: "clamp(16px, 2vw, 18px)", lineHeight: 1.55, maxWidth: 620, margin: "0 auto 40px", opacity: .82 }}>
+          <p className="stagger-in p-lead" style={{ ...d(440), maxWidth: 680, margin: "0 auto 36px" }}>
             Empresa mexicana líder en el desarrollo y comercialización de fragancias,
             sabores y materias primas para las industrias alimenticia, cosmética,
             farmacéutica, de limpieza y otros sectores.
           </p>
           <div className="hero-actions stagger-in" style={d(580)}>
             <button className="btn-primary" onClick={() => go("personalizacion")}>
-              Desarrollar contigo <span className="arrow">↗</span>
+              Cuéntanos tu proyecto <span className="arrow">↗</span>
             </button>
             <button className="btn-ghost" onClick={() => go("nosotros")}>
-              Conocer Aromáticos <span className="arrow">↗</span>
+              Conócenos <span className="arrow">↗</span>
             </button>
           </div>
         </div>
       </div>
     </div>
+    <StatsSection />
   </section>
 );
 

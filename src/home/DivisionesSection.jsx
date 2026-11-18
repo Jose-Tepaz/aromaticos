@@ -7,7 +7,8 @@ const DIVISIONES = [
     title: "Fragancias",
     tag: "Perfumería fina · Cosmética · Limpieza",
     variant: "navy",
-    image: "/imagenes/fragancias.webp",
+    image: "/imagenes/division-fragancias.jpg",
+    label: "Fragancias · evaluación olfativa",
     desc: "Desarrollamos fragancias para perfumería, cosmética, cuidado personal y productos de limpieza, adaptadas a las necesidades e identidad de cada marca.",
   },
   {
@@ -15,7 +16,8 @@ const DIVISIONES = [
     title: "Sabores",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     variant: "orange",
-    image: "/imagenes/sabores.webp",
+    image: "/imagenes/division-sabores.jpg",
+    label: "Sabores · desarrollo",
     desc: "Creamos sabores para una amplia variedad de productos alimenticios y bebidas, adaptándonos a las necesidades de cada cliente y proyecto.",
   },
   {
@@ -23,7 +25,8 @@ const DIVISIONES = [
     title: "Materias Primas",
     tag: "Industrial · Desarrollo · Investigación",
     variant: "cream",
-    image: "/imagenes/materia-prima.webp",
+    image: "/imagenes/division-materias.jpg",
+    label: "Materias primas · laboratorio",
     desc: "Ofrecemos materias primas para distintas aplicaciones industriales, respaldadas por nuestra experiencia y compromiso con la calidad.",
   },
 ];
@@ -32,7 +35,7 @@ const DivisionCard = ({ d, go }) => (
   <article className="card-lift" onClick={() => go(d.id)}>
     <Placeholder
       variant={d.variant}
-      label={`${d.title} · ${d.variant === "cream" ? "flat lay" : "producto"}`}
+      label={d.label}
       height="clamp(280px, 90vw, 440px)"
       parallax
       dark={d.variant === "cream"}
@@ -45,7 +48,7 @@ const DivisionCard = ({ d, go }) => (
         <span className="mono" style={{ opacity: .6, whiteSpace: "nowrap" }}>Ver ↗</span>
       </div>
       <div className="mono" style={{ opacity: .65, marginBottom: 14 }}>{d.tag}</div>
-      <p style={{ fontSize: 14, lineHeight: 1.6, opacity: .82 }}>{d.desc}</p>
+      <p className="p-card">{d.desc}</p>
     </div>
   </article>
 );
@@ -58,7 +61,7 @@ const DivisionesSection = ({ go }) => (
           <div className="eyebrow">Nuestras divisiones</div>
           <h2 className="section-title">Conoce nuestras divisiones</h2>
         </div>
-        <p style={{ maxWidth: 460, opacity: .75, fontSize: 15, lineHeight: 1.6, textWrap: "balance" }}>
+        <p className="p-intro" style={{ maxWidth: 460, textWrap: "balance" }}>
           Desarrollamos y comercializamos fragancias, sabores y materias primas,
           ofreciendo soluciones adaptadas a las necesidades de cada cliente e industria.
         </p>
