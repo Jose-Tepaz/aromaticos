@@ -4,7 +4,7 @@ const d = (ms) => ({ "--d": `${ms}ms` });
 const SLIDES = [
   { src: "/imagenes/division-fragancias.jpg", pos: "50% 50%" },
   { src: "/imagenes/hero-frascos.webp",       pos: "50% 62%" },   // frascos ámbar con etiquetas
-  { src: "/imagenes/hero-polvos.webp",        pos: "50% 45%" },   // polvos y materias primas
+  { src: "/imagenes/hero-laboratorio.webp",   pos: "50% 55%" },   // polvos y frascos en el laboratorio
 ];
 
 const HeroSection = ({ go }) => (
