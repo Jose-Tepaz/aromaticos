@@ -121,18 +121,18 @@ export const Footer = ({ go }) => {
   );
 };
 
-export const Placeholder = ({ variant = "", label, height = "auto", style = {}, dark = false, image = null, parallax = false }) => {
+export const Placeholder = ({ variant = "", label, height = "auto", style = {}, dark = false, image = null, parallax = false, solidLabel = false }) => {
   const imgRef = useParallax(parallax && !!image);
   return (
     <div className={`ph ${variant}`} style={{ height, ...style }}>
-      <span className={`ph-label ${dark ? "dark" : ""}`}>{label}</span>
+      <span className={`ph-label ${dark ? "dark" : ""} ${solidLabel ? "solid" : ""}`}>{label}</span>
       {image && <img ref={imgRef} className="ph-img" src={image} alt={label} loading="lazy" decoding="async" />}
     </div>
   );
 };
 
 export const PersonalCTA = ({ go }) => (
-  <section style={{ padding: "120px 0" }}>
+  <section style={{ padding: "var(--section-y) 0" }}>
     <div className="wrap">
       <div className="cta-grid">
         <Reveal>

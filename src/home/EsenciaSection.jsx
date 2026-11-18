@@ -3,7 +3,7 @@ import { Reveal } from "../motion.jsx";
 import esenciaImage from "../../public/imagenes/img-1.webp";
 
 const EsenciaSection = ({ go }) => (
-  <section style={{ padding: "clamp(72px, 11vw, 140px) 0" }}>
+  <section style={{ padding: "var(--section-y) 0" }}>
     <div className="wrap">
       <div className="split-2" style={{ alignItems: "center" }}>
         <Reveal variant="left">
@@ -11,7 +11,7 @@ const EsenciaSection = ({ go }) => (
         </Reveal>
         <Reveal delay={150}>
           <div className="eyebrow">Nuestra esencia</div>
-          <h2 className="section-title" style={{ marginBottom: 20 }}>
+          <h2 className="section-title">
             La memoria olfativa de <em>una nación</em>.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.65, opacity: .85, marginBottom: 20 }}>

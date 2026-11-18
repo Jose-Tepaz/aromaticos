@@ -8,7 +8,7 @@ const STATS = [
 ];
 
 const StatsSection = () => (
-  <section style={{ padding: "clamp(56px, 7vw, 100px) 0 40px" }}>
+  <section style={{ padding: "var(--section-y-sm) 0" }}>
     <div className="wrap">
       <Line />
       <div className="cols-4" style={{ padding: "32px 0" }}>

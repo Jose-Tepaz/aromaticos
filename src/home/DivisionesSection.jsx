@@ -4,30 +4,27 @@ import { Reveal } from "../motion.jsx";
 const DIVISIONES = [
   {
     id: "fragancias",
-    num: "01",
     title: "Fragancias",
     tag: "Perfumería fina · Cosmética · Limpieza",
     variant: "navy",
     image: "/imagenes/fragancias.webp",
-    desc: "Fragancias que se vuelven identidad. Desde la legendaria Agua de Colonia Sanborns hasta desarrollos contemporáneos para marcas líderes.",
+    desc: "Desarrollamos fragancias para perfumería, cosmética, cuidado personal y productos de limpieza, adaptadas a las necesidades e identidad de cada marca.",
   },
   {
     id: "sabores",
-    num: "02",
     title: "Sabores",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     variant: "orange",
     image: "/imagenes/sabores.webp",
-    desc: "Soluciones saborísticas con carácter: dulces, ácidos, frutales, lácteos y tropicales. Estabilidad y fidelidad sensorial.",
+    desc: "Creamos sabores para una amplia variedad de productos alimenticios y bebidas, adaptándonos a las necesidades de cada cliente y proyecto.",
   },
   {
     id: "materias",
-    num: "03",
     title: "Materias Primas",
     tag: "Industrial · Desarrollo · Investigación",
     variant: "cream",
     image: "/imagenes/materia-prima.webp",
-    desc: "Proveemos materias primas de alta pureza para la industria. Red global de abastecimiento con trazabilidad y certificaciones.",
+    desc: "Ofrecemos materias primas para distintas aplicaciones industriales, respaldadas por nuestra experiencia y compromiso con la calidad.",
   },
 ];
 
@@ -40,13 +37,13 @@ const DivisionCard = ({ d, go }) => (
       parallax
       dark={d.variant === "cream"}
       image={d.image}
+      solidLabel
     />
     <div style={{ padding: "20px 4px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-        <span className="mono" style={{ opacity: .5 }}>{d.num}</span>
-        <span className="mono" style={{ opacity: .5 }}>Ver división ↗</span>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 10 }}>
+        <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: 0, letterSpacing: "-.01em", fontWeight: 400 }}>{d.title}</h3>
+        <span className="mono" style={{ opacity: .6, whiteSpace: "nowrap" }}>Ver ↗</span>
       </div>
-      <h3 className="serif" style={{ fontSize: 40, margin: "0 0 10px", letterSpacing: "-.01em", fontWeight: 400 }}>{d.title}</h3>
       <div className="mono" style={{ opacity: .65, marginBottom: 14 }}>{d.tag}</div>
       <p style={{ fontSize: 14, lineHeight: 1.6, opacity: .82 }}>{d.desc}</p>
     </div>
@@ -54,16 +51,16 @@ const DivisionCard = ({ d, go }) => (
 );
 
 const DivisionesSection = ({ go }) => (
-  <section style={{ padding: "clamp(36px, 5vw, 60px) 0 clamp(56px, 8vw, 100px)" }}>
+  <section style={{ padding: "var(--section-y) 0" }}>
     <div className="wrap">
       <Reveal className="head-row" style={{ marginBottom: 40 }}>
         <div>
           <div className="eyebrow">Nuestras divisiones</div>
           <h2 className="section-title">Conoce nuestras divisiones</h2>
         </div>
-        <p style={{ maxWidth: 360, opacity: .75, fontSize: 15, lineHeight: 1.6 }}>
-          Fórmulas desarrolladas y producidas en México para industrias que requieren
-          precisión, consistencia y una firma sensorial propia.
+        <p style={{ maxWidth: 460, opacity: .75, fontSize: 15, lineHeight: 1.6, textWrap: "balance" }}>
+          Desarrollamos y comercializamos fragancias, sabores y materias primas,
+          ofreciendo soluciones adaptadas a las necesidades de cada cliente e industria.
         </p>
       </Reveal>
 

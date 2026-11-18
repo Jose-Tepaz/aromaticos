@@ -3,7 +3,7 @@ const logo = "/imagenes/AromaticosColor.png";
 const d = (ms) => ({ "--d": `${ms}ms` });
 
 const HeroSection = ({ go }) => (
-  <section style={{ padding: "clamp(40px, 6vw, 80px) 0 clamp(64px, 8vw, 120px)" }}>
+  <section style={{ padding: "var(--section-y-sm) 0 var(--section-y)" }}>
     <div className="wrap">
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32, textAlign: "center" }}>
         <img className="stagger-in" style={{ ...d(0), width: "clamp(170px, 22vw, 250px)", height: "auto" }} src={logo} alt="Aromáticos" />
@@ -25,7 +25,7 @@ const HeroSection = ({ go }) => (
           <p className="stagger-in" style={{ ...d(440), fontSize: "clamp(16px, 2vw, 18px)", lineHeight: 1.55, maxWidth: 620, margin: "0 auto 40px", opacity: .82 }}>
             Empresa mexicana líder en el desarrollo y comercialización de fragancias,
             sabores y materias primas para las industrias alimenticia, cosmética,
-            farmacéutica y de limpieza.
+            farmacéutica, de limpieza y otros sectores.
           </p>
           <div className="hero-actions stagger-in" style={d(580)}>
             <button className="btn-primary" onClick={() => go("personalizacion")}>
