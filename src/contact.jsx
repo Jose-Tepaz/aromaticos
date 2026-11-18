@@ -1,5 +1,25 @@
-import { Placeholder } from "./components.jsx";
 import { Reveal } from "./motion.jsx";
+
+// Ubicación del mapa. IMPORTANTE: reemplazar por la dirección real de la oficina
+// (calle, número, colonia, ciudad) para que el pin quede en el lugar exacto.
+const MAP_QUERY = "Ciudad de México, México";
+const MAP_SRC = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=12&output=embed`;
+const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
+
+const MapEmbed = () => (
+  <div className="map-embed">
+    <iframe
+      title="Mapa de la oficina central de Aromáticos"
+      src={MAP_SRC}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      allowFullScreen
+    />
+    <a className="map-link mono" href={MAP_LINK} target="_blank" rel="noopener noreferrer">
+      Abrir en Google Maps <span className="arrow">↗</span>
+    </a>
+  </div>
+);
 
 const Contact = ({ go }) => {
   return (
@@ -44,7 +64,7 @@ const Contact = ({ go }) => {
             </div>
 
             <Reveal variant="right" delay={100}>
-              <Placeholder variant="cream" label="Mapa · Ciudad de México" height="clamp(260px, 80vw, 380px)" dark />
+              <MapEmbed />
               <div style={{ padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
                 <div className="mono" style={{ opacity: .6, marginBottom: 8 }}>Oficina central</div>
                 <div style={{ fontSize: 17, lineHeight: 1.55 }}>

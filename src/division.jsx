@@ -5,11 +5,11 @@ const DIVISION_DATA = {
   fragancias: {
     num: "01",
     name: "Fragancias",
-    image: "/imagenes/fragancias.webp",
+    image: "/imagenes/division-fragancias.jpg",
     variant: "navy",
     tag: "Perfumería fina · Cosmética · Limpieza",
     lead: "Fragancias que se vuelven identidad. Desde la legendaria Agua de Colonia Sanborns hasta desarrollos contemporáneos, creamos firmas olfativas que perduran en la memoria.",
-    heroLabel: "Perfume · bodegón editorial",
+    heroLabel: "Fragancias · evaluación olfativa",
     catalogTitle: "Familias olfativas",
     catalogDesc: "Nuestra paleta creativa cubre siete familias principales. Cada una con decenas de acordes, materias nobles y sintéticas, y posibilidad de desarrollo a la medida.",
     items: [
@@ -31,11 +31,11 @@ const DIVISION_DATA = {
   sabores: {
     num: "02",
     name: "Sabores",
-    image: "/imagenes/sabores.webp",
+    image: "/imagenes/division-sabores.webp",
     variant: "orange",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     lead: "Sabores con carácter: dulces, ácidos, frutales, lácteos y tropicales. Desarrollamos perfiles sensoriales estables, versátiles y fieles al ingrediente original.",
-    heroLabel: "Frutas · alta velocidad / splash",
+    heroLabel: "Sabores · desarrollo",
     catalogTitle: "Perfiles saborísticos",
     catalogDesc: "Nuestro laboratorio desarrolla y reformula sabores para cada tipo de aplicación: bebidas, lácteos, confitería, panadería y productos farmacéuticos.",
     items: [
@@ -57,11 +57,11 @@ const DIVISION_DATA = {
   materias: {
     num: "03",
     name: "Materias Primas",
-    image: "/imagenes/materia-prima.webp",
+    image: "/imagenes/division-materias.jpg",
     variant: "cream",
     tag: "Industrial · Desarrollo · Investigación",
     lead: "Proveemos materias primas de alta pureza para la industria: extractos, aceites esenciales, aromaquímicos y solventes. Red global de abastecimiento con trazabilidad total.",
-    heroLabel: "Materias primas · laboratorio vidrio",
+    heroLabel: "Materias primas · laboratorio",
     catalogTitle: "Catálogo de materias primas",
     catalogDesc: "Más de 800 referencias en nuestro inventario, con capacidad de importación especializada para proyectos con requerimientos únicos.",
     items: [
@@ -136,7 +136,7 @@ const Division = ({ id, go }) => {
               
             </div>
             <Reveal variant="scale" delay={150}>
-              <Placeholder variant={d.variant} label={d.heroLabel} height="clamp(340px, 95vw, 640px)" dark={d.variant === "cream"} image={d.image} parallax />
+              <Placeholder variant={d.variant} label={d.heroLabel} height="clamp(340px, 95vw, 640px)" dark={d.variant === "cream"} image={d.image} parallax solidLabel />
             </Reveal>
            
           </div>
@@ -158,16 +158,16 @@ const Division = ({ id, go }) => {
           <div className="grid-4-tight" style={{ border: "1px solid var(--rule)" }}>
             {d.items.map((it, i) => (
               <Reveal key={it.code} delay={(i % 4) * 80} variant="fade" style={{ background: "var(--bg)" }}>
-              <article style={{ background: "var(--bg)", cursor: "pointer", transition: "background .3s ease", height: "100%" }}
+              <article className="catalog-card" style={{ background: "var(--bg)", cursor: "pointer", transition: "background .3s ease", height: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "color-mix(in oklab, var(--fg) 4%, var(--bg))"}
                 onMouseLeave={e => e.currentTarget.style.background = "var(--bg)"}>
                 <Placeholder variant={it.variant} label={it.name} height="220px" dark={it.variant === "cream"} />
-                <div style={{ padding: "20px 18px" }}>
+                <div className="catalog-body" style={{ padding: "20px 18px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                    <h3 className="serif" style={{ fontSize: 24, margin: 0, fontWeight: 500 }}>{it.name}</h3>
-                    <span className="mono" style={{ opacity: .5 }}>{it.code}</span>
+                    <h3 className="serif catalog-name" style={{ fontSize: 24, margin: 0, fontWeight: 500 }}>{it.name}</h3>
+                    <span className="mono catalog-code" style={{ opacity: .5 }}>{it.code}</span>
                   </div>
-                  <p style={{ fontSize: 13, lineHeight: 1.55, opacity: .7, margin: 0 }}>{it.notes}</p>
+                  <p className="catalog-notes" style={{ fontSize: 13, lineHeight: 1.55, opacity: .7, margin: 0 }}>{it.notes}</p>
                 </div>
               </article>
               </Reveal>
@@ -209,7 +209,7 @@ const Division = ({ id, go }) => {
           <div className="split-2" style={{ gap: 24 }}>
             {Object.entries(DIVISION_DATA).filter(([k]) => k !== id).map(([k, other], i) => (
               <Reveal key={k} delay={i * 120}>
-              <article className="card-lift" onClick={() => go(k)}>
+              <article className="card-lift division-card" onClick={() => go(k)}>
                 <div className="ph" style={{ aspectRatio: "4 / 3" }}>
                   <img className="ph-img" src={other.image} alt={other.name} loading="lazy" />
                 </div>

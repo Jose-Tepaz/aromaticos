@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import personalizationImage from "../public/imagenes/img-2.webp";
 import { Reveal, useParallax } from "./motion.jsx";
 
 export const Nav = ({ page, go }) => {
@@ -18,7 +17,9 @@ export const Nav = ({ page, go }) => {
   useEffect(() => { setOpen(false); }, [page]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    // Histéresis: al encogerse, el menú reduce la altura de la página y el navegador
+    // reajusta el scroll unos píxeles; con un solo umbral eso lo hacía alternar sin parar.
+    const onScroll = () => setScrolled((prev) => (prev ? window.scrollY > 8 : window.scrollY > 64));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -132,35 +133,45 @@ export const Placeholder = ({ variant = "", label, height = "auto", style = {}, 
 };
 
 export const PersonalCTA = ({ go }) => (
-  <section style={{ padding: "var(--section-y) 0" }}>
+  <section style={{ padding: "var(--section-y-lg) 0" }}>
     <div className="wrap">
       <div className="cta-grid">
         <Reveal>
           <div className="eyebrow">¿Buscas algo personalizado?</div>
           <h2 className="serif" style={{
             fontSize: "var(--title-section)",
-            lineHeight: 1, margin: "20px 0 28px", letterSpacing: "-.02em", fontWeight: 400,
+            lineHeight: 1.05, margin: "20px 0 28px", letterSpacing: "-.02em", fontWeight: 400,
           }}>
-            Si tu proyecto requiere <em style={{ color: "var(--accent)" }}>aromas</em>,<em style={{ fontStyle: "italic" }}> sabores</em> o materias primas,
-            en Aromáticos <em style={{ color: "var(--accent)" }}>lo hacemos posible</em>.
+            Si tu proyecto requiere <em style={{ color: "var(--accent)" }}>aromas</em>,
+            <em style={{ color: "var(--accent)" }}> sabores</em> o materias primas,
+            en Aromáticos <em>lo hacemos posible</em>.
           </h2>
-          <p className="p-lead" style={{ maxWidth: 520, marginBottom: 36 }}>
+          <p className="p-lead" style={{ maxWidth: 520, marginBottom: 40, lineHeight: 1.75 }}>
             Desarrollamos, conseguimos y personalizamos soluciones a la medida,
             adaptándonos a las necesidades específicas de cada cliente.
             Cuéntanos qué buscas y nosotros lo desarrollamos contigo.
           </p>
-          <button className="btn-primary" onClick={() => go("personalizacion")}>
-            Cuéntanos tu proyecto <span className="arrow">↗</span>
-          </button>
-        </Reveal>
-        <Reveal variant="scale" delay={150} style={{ position: "relative" }}>
-          <img src={personalizationImage} alt="Personalización" loading="lazy" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }} />
-          <div className="cta-badge">
-            <div className="mono" style={{ opacity: .6, marginBottom: 6 }}>Tiempo típico</div>
-            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>
-              4–8 <span style={{ fontSize: 16, opacity: .6 }}>semanas</span>
+          <div className="cta-actions">
+            <button className="btn-primary" onClick={() => go("personalizacion")}>
+              Cuéntanos tu proyecto <span className="arrow">↗</span>
+            </button>
+            <div className="cta-time">
+              <div className="mono" style={{ opacity: .6, marginBottom: 6 }}>Tiempo típico</div>
+              <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>
+                4–8 <span style={{ fontSize: 16, opacity: .6 }}>semanas</span>
+              </div>
             </div>
           </div>
+        </Reveal>
+        <Reveal variant="scale" delay={150}>
+          <Placeholder
+            variant="navy"
+            label="Preparación de esencias"
+            height="auto"
+            style={{ aspectRatio: "4 / 5", maxHeight: 640, width: "100%" }}
+            image="/imagenes/personalizacion.webp"
+            solidLabel
+          />
         </Reveal>
       </div>
     </div>

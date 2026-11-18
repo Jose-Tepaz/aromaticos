@@ -16,7 +16,7 @@ const DIVISIONES = [
     title: "Sabores",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     variant: "orange",
-    image: "/imagenes/division-sabores.jpg",
+    image: "/imagenes/division-sabores.webp",
     label: "Sabores · desarrollo",
     desc: "Creamos sabores para una amplia variedad de productos alimenticios y bebidas, adaptándonos a las necesidades de cada cliente y proyecto.",
   },
@@ -32,7 +32,13 @@ const DIVISIONES = [
 ];
 
 const DivisionCard = ({ d, go }) => (
-  <article className="card-lift" onClick={() => go(d.id)}>
+  <article
+    className="card-lift division-card"
+    role="link"
+    tabIndex={0}
+    onClick={() => go(d.id)}
+    onKeyDown={(e) => { if (e.key === "Enter") go(d.id); }}
+  >
     <Placeholder
       variant={d.variant}
       label={d.label}
@@ -44,8 +50,8 @@ const DivisionCard = ({ d, go }) => (
     />
     <div style={{ padding: "20px 4px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 10 }}>
-        <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: 0, letterSpacing: "-.01em", fontWeight: 400 }}>{d.title}</h3>
-        <span className="mono" style={{ opacity: .6, whiteSpace: "nowrap" }}>Ver ↗</span>
+        <h3 className="serif division-title" style={{ fontSize: "var(--title-card)", margin: 0, letterSpacing: "-.01em", fontWeight: 400 }}>{d.title}</h3>
+        <span className="mono division-ver" style={{ whiteSpace: "nowrap" }}>Ver <span className="arrow">↗</span></span>
       </div>
       <div className="mono" style={{ opacity: .65, marginBottom: 14 }}>{d.tag}</div>
       <p className="p-card">{d.desc}</p>

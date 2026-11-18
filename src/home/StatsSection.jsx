@@ -10,7 +10,7 @@ const StatsSection = () => (
   <div className="hero-stats">
     <div className="wrap">
       <Line />
-      <div className="stats-grid" style={{ padding: "clamp(20px, 3vh, 32px) 0" }}>
+      <div className="stats-grid" style={{ padding: "clamp(32px, 5vh, 52px) 0" }}>
         {STATS.map(([k, v], i) => (
           <Reveal key={i} delay={i * 110}>
             <div className="serif" style={{ fontSize: "clamp(40px, 5vw, 54px)", lineHeight: 1, letterSpacing: "-.02em" }}>{k}</div>

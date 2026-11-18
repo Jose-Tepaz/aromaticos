@@ -4,13 +4,15 @@ const prefersReduced = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export const useInView = ({ threshold = 0.15, rootMargin = "0px 0px -8% 0px" } = {}) => {
+export const useInView = ({ threshold = 0.15, rootMargin = "0px 0px -8% 0px", skipInSection = false } = {}) => {
   const ref = useRef(null);
   const [seen, setSeen] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Dentro de una <section> la entrada la dispara la sección completa (ver useSectionReveal)
+    if (skipInSection && el.closest("section")) return;
     if (prefersReduced() || !("IntersectionObserver" in window)) {
       setSeen(true);
       return;
@@ -23,13 +25,13 @@ export const useInView = ({ threshold = 0.15, rootMargin = "0px 0px -8% 0px" } =
     }, { threshold, rootMargin });
     io.observe(el);
     return () => io.disconnect();
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, skipInSection]);
 
   return [ref, seen];
 };
 
 export const Reveal = ({ as: Tag = "div", delay = 0, variant, className = "", style, children, ...rest }) => {
-  const [ref, seen] = useInView();
+  const [ref, seen] = useInView({ skipInSection: true });
   const cls = ["reveal", variant && `reveal-${variant}`, seen && "in", className].filter(Boolean).join(" ");
   return (
     <Tag ref={ref} className={cls} style={{ "--d": `${delay}ms`, ...style }} {...rest}>
@@ -99,4 +101,30 @@ export const useParallax = (enabled = true, strength = 0.06) => {
   }, [enabled, strength]);
 
   return ref;
+};
+
+// Entrada sección por sección: cuando una <section> llega al 80 % de la pantalla,
+// se marca con .sec-in y todos sus .reveal se animan juntos (con su escalonado).
+export const useSectionReveal = (key) => {
+  useEffect(() => {
+    const sections = [...document.querySelectorAll("main section")];
+    if (prefersReduced() || !("IntersectionObserver" in window)) {
+      sections.forEach((s) => s.classList.add("sec-in"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+          // Escalonado de 0.15 s entre bloques (máximo 6 pasos) y luego se activa la sección
+          entry.target.querySelectorAll(".reveal").forEach((el, i) => {
+            el.style.setProperty("--d", `${Math.min(i, 5) * 150}ms`);
+          });
+          entry.target.classList.add("sec-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: "0px 0px -20% 0px" });
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, [key]);
 };

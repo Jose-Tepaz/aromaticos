@@ -47,7 +47,7 @@ const About = ({ go }) => {
               </p>
             </Reveal>
             <Reveal variant="scale" delay={150}>
-              <Placeholder variant="navy" label="Archivo · fábrica 1960s" height="clamp(320px, 90vw, 560px)" />
+              <Placeholder variant="navy" label="Almacén de esencias" height="clamp(320px, 90vw, 560px)" image="/imagenes/nosotros-almacen.webp" solidLabel />
             </Reveal>
           </div>
         </div>

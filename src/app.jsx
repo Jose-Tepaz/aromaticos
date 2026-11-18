@@ -6,6 +6,7 @@ import Division from "./division.jsx";
 import About from "./about.jsx";
 import Personalization from "./personalization.jsx";
 import Contact from "./contact.jsx";
+import { useSectionReveal } from "./motion.jsx";
 
 const App = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const App = () => {
   const [tweaksOn, setTweaksOn] = useState(false);
 
   const page = location.pathname.replace(/^\//, "") || "home";
+
+  useSectionReveal(location.pathname);
 
   const setTheme = (t) => {
     setThemeState(t);
