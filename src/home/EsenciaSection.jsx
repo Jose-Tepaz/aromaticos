@@ -25,7 +25,7 @@ const EsenciaSection = ({ go }) => (
             y despiertan emociones.
           </p>
           <button className="btn-ghost" onClick={() => go("nosotros")}>
-            Leer historia completa <span className="arrow">↗</span>
+            Nuestra historia <span className="arrow">↗</span>
           </button>
         </Reveal>
       </div>

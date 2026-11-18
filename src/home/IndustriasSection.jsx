@@ -3,8 +3,8 @@ import { Reveal } from "../motion.jsx";
 const INDUSTRIAS = [
   ["Alimenticia",   "Sabores, colores, extractos para bebidas, confitería, panadería y lácteos."],
   ["Cosmética",     "Perfumería fina, cuidado personal, skincare, higiene y baño."],
-  ["Farmacéutica",  "Agentes saborizantes y aromáticos estables para formulaciones sensibles."],
-  ["Limpieza",      "Fragancias técnicas de alto rendimiento y gran estabilidad."],
+  ["Farmacéutica",  "Ofrecemos sabores y fragancias para diferentes aplicaciones de la industria farmacéutica."],
+  ["Limpieza",      "Desarrollamos fragancias para productos de limpieza y cuidado del hogar, adaptadas a las necesidades de cada formulación."],
 ];
 
 const IndustriasSection = () => (

@@ -30,7 +30,7 @@ const Personalization = ({ go }) => {
     outline: "none",
   };
   const labelStyle = {
-    display: "block", fontFamily: "'JetBrains Mono', monospace",
+    display: "block", fontFamily: "var(--font-sans)", fontWeight: 500,
     fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase",
     opacity: .6, marginBottom: 4,
   };
@@ -165,7 +165,7 @@ const Personalization = ({ go }) => {
 
               <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
                 <button type="submit" className="btn-primary">
-                  {sent ? "Enviado ✓" : "Enviar briefing"} <span className="arrow">↗</span>
+                  {sent ? "Enviado ✓" : "Enviar solicitud"} <span className="arrow">↗</span>
                 </button>
                 <span className="mono" style={{ opacity: .5 }}>
                   O escríbenos a hola@aromaticos.mx

@@ -8,7 +8,8 @@ const DIVISIONES = [
     title: "Fragancias",
     tag: "Perfumería fina · Cosmética · Limpieza",
     variant: "navy",
-    image: "/imagenes/fragancias.webp",
+    image: "/imagenes/division-fragancias.jpg",
+    label: "Fragancias · evaluación olfativa",
     desc: "Fragancias que se vuelven identidad. Desde la legendaria Agua de Colonia Sanborns hasta desarrollos contemporáneos para marcas líderes.",
   },
   {
@@ -17,7 +18,8 @@ const DIVISIONES = [
     title: "Sabores",
     tag: "Alimenticia · Bebidas · Farmacéutica",
     variant: "orange",
-    image: "/imagenes/sabores.webp",
+    image: "/imagenes/division-sabores.jpg",
+    label: "Sabores · desarrollo",
     desc: "Soluciones saborísticas con carácter: dulces, ácidos, frutales, lácteos y tropicales. Estabilidad y fidelidad sensorial.",
   },
   {
@@ -26,7 +28,8 @@ const DIVISIONES = [
     title: "Materias Primas",
     tag: "Industrial · Desarrollo · Investigación",
     variant: "cream",
-    image: "/imagenes/materia-prima.webp",
+    image: "/imagenes/division-materias.jpg",
+    label: "Materias primas · laboratorio",
     desc: "Proveemos materias primas de alta pureza para la industria. Red global de abastecimiento con trazabilidad y certificaciones.",
   },
 ];
@@ -35,7 +38,7 @@ const DivisionCard = ({ d, go }) => (
   <article className="card-lift" onClick={() => go(d.id)}>
     <Placeholder
       variant={d.variant}
-      label={`${d.title} · ${d.variant === "cream" ? "flat lay" : "producto"}`}
+      label={d.label}
       height="clamp(280px, 90vw, 440px)"
       parallax
       dark={d.variant === "cream"}

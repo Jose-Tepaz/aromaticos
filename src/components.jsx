@@ -150,7 +150,7 @@ export const PersonalCTA = ({ go }) => (
             Cuéntanos qué buscas y nosotros lo desarrollamos contigo.
           </p>
           <button className="btn-primary" onClick={() => go("personalizacion")}>
-            Iniciar briefing <span className="arrow">↗</span>
+            Cuéntanos tu proyecto <span className="arrow">↗</span>
           </button>
         </Reveal>
         <Reveal variant="scale" delay={150} style={{ position: "relative" }}>
