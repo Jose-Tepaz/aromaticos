@@ -2,19 +2,19 @@ const d = (ms) => ({ "--d": `${ms}ms` });
 
 // Fotos del carrusel de fondo (se funden una a otra)
 const SLIDES = [
-  "/imagenes/division-fragancias.jpg",
-  "/imagenes/division-sabores.webp",
-  "/imagenes/division-materias.jpg",
+  { src: "/imagenes/division-fragancias.jpg", pos: "50% 50%" },
+  { src: "/imagenes/hero-frascos.webp",       pos: "50% 62%" },   // frascos ámbar con etiquetas
+  { src: "/imagenes/hero-polvos.webp",        pos: "50% 45%" },   // polvos y materias primas
 ];
 
 const HeroSection = ({ go }) => (
     <section className="hero-photo">
       <div className="hero-bg" aria-hidden="true">
-        {SLIDES.map((src, i) => (
+        {SLIDES.map(({ src, pos }, i) => (
           <img
             key={src}
             className="hero-slide"
-            style={{ "--i": i }}
+            style={{ "--i": i, objectPosition: pos }}
             src={src}
             alt=""
             fetchpriority={i === 0 ? "high" : "auto"}
