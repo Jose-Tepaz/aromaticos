@@ -1,6 +1,7 @@
 import { Puntos } from "./home/InnovacionSection.jsx";
 import { useRef } from "react";
 import { Placeholder, PersonalCTA } from "./components.jsx";
+import Slider from "./slider.jsx";
 import { Reveal, useInView, useEscalera } from "./motion.jsx";
 
 // Fila de la línea del tiempo: el año y el título suben, luego el texto y el número, en cascada (como en miligram.pt)
@@ -15,6 +16,13 @@ const FilaTiempo = ({ t, i, total }) => {
     </div>
   );
 };
+
+// Fotos del carrusel de "Nuestra esencia"
+const FOTOS_ESENCIA = [
+  { src: "/imagenes/nosotros-polvos-collage.webp", alt: "Polvos y materias primas en frascos, cápsulas y latas de acero" },
+  { src: "/imagenes/nosotros-frascos.webp", alt: "Frascos ámbar etiquetados con sabores en la mesa del laboratorio", pos: "50% 60%" },
+  { src: "/imagenes/nosotros-polvos.webp", alt: "Frascos y cápsulas con polvos de distintos tonos en la planta" },
+];
 
 const About = ({ go }) => {
   const valores = useRef(null);
@@ -64,7 +72,7 @@ const About = ({ go }) => {
               </p>
             </Reveal>
             <Reveal variant="scale" delay={150}>
-              <Placeholder variant="navy" label="Almacén de esencias" height="clamp(320px, 90vw, 560px)" image="/imagenes/nosotros-almacen.webp" solidLabel />
+              <Slider slides={FOTOS_ESENCIA} />
             </Reveal>
           </div>
         </div>

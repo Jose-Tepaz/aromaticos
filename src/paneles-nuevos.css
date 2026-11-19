@@ -103,7 +103,7 @@ html[data-tono="arena"] { --tono-bg: #ece0c8; }
 .footer-sello { display: block; width: 64px; height: auto; margin-bottom: 20px; filter: brightness(0) invert(1); opacity: .95; }
 .footer-foto li { color: var(--cream); }
 .footer-link { color: var(--cream); font-size: 14px; opacity: .85; text-align: left; transition: opacity .3s ease, color .3s ease; }
-.footer-link:hover { opacity: 1; color: var(--cream-2); }
+.footer-link:hover { opacity: 1; color: var(--orange); }
 .footer-foto .footer-bottom { border-top-color: rgba(255, 255, 255, .18); opacity: .75; }
 @media (max-width: 520px) { .footer-foto { padding-top: 64px; margin-top: 0; } }
 
