@@ -2,7 +2,7 @@ import { Placeholder } from "../components.jsx";
 import { useSearchParams } from "react-router-dom";
 import { Reveal } from "../motion.jsx";
 import { DIVISIONES } from "./divisionesData.js";
-import { DivisionesPaneles, DivisionesLista, DivisionesApiladas } from "./DivisionesVariantes.jsx";
+import { DivisionesPaneles, DivisionesLista, DivisionesApiladas, DivisionesIndice, DivisionesBento, DivisionesGaleria, DivisionesPin } from "./DivisionesVariantes.jsx";
 
 
 const DivisionCard = ({ d, go }) => (
@@ -36,12 +36,13 @@ const DivisionCard = ({ d, go }) => (
 const DivisionesSection = ({ go }) => {
   const [params] = useSearchParams();
   const variante = params.get("divisiones");
+  if (!variante) return <section className="dv-seccion-pin"><DivisionesPin go={go} /></section>;
   return (
   <section style={{ padding: "var(--section-y) 0" }}>
     <div className="wrap">
       <Reveal className="head-row" style={{ marginBottom: 40 }}>
         <div>
-          <div className="eyebrow">Nuestras divisiones</div>
+          <div className="eyebrow eyebrow-naranja">Nuestras divisiones</div>
           <h2 className="section-title">Conoce nuestras divisiones</h2>
         </div>
         <p className="p-intro" style={{ maxWidth: 460, textWrap: "balance" }}>
@@ -54,8 +55,14 @@ const DivisionesSection = ({ go }) => {
         <DivisionesPaneles go={go} />
       ) : variante === "lista" ? (
         <DivisionesLista go={go} />
-      ) : variante !== "cuadricula" ? (
+      ) : variante === "apiladas" ? (
         <DivisionesApiladas go={go} />
+      ) : variante === "indice" ? (
+        <DivisionesIndice go={go} />
+      ) : variante === "bento" ? (
+        <DivisionesBento go={go} />
+      ) : variante !== "cuadricula" ? (
+        <DivisionesGaleria go={go} />
       ) : (
         <div className="cols-3">
           {DIVISIONES.map((d, i) => (

@@ -1,0 +1,82 @@
+/* ---------- Menú y portada al estilo de luneo.framer.website ----------
+   Menú plano a todo el ancho: logo a la izquierda, enlaces al centro y enlace subrayado a la derecha.
+   Sobre la portada es transparente con texto blanco; al bajar se vuelve una barra crema desenfocada. */
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  background: transparent; border: 0; box-shadow: none;
+  color: var(--ink);
+  transition: background .9s ease, box-shadow .9s ease, color .8s ease;
+}
+.nav.scrolled { background: rgba(255, 255, 255, .85); -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); box-shadow: 0 1px 0 rgba(26, 26, 26, .08); }
+.nav.over-hero { color: #fff; }
+
+.nav-inner {
+  position: relative;
+  width: 100%; max-width: 1440px; height: 92px; margin: 0 auto; box-sizing: border-box;
+  padding: 0 40px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
+  background: none; border: 0; border-radius: 0; backdrop-filter: none;
+  transition: height .9s cubic-bezier(.22, .61, .36, 1);
+}
+.nav.scrolled .nav-inner { height: 66px; }
+
+.nav-logo { width: 76px; height: auto; transition: filter .8s ease, width .9s cubic-bezier(.22, .61, .36, 1); }
+.nav.scrolled .nav-logo { width: 50px; }
+.nav.over-hero .nav-logo { filter: brightness(0) invert(1); }
+
+.nav-links { gap: 30px; }
+.nav-links button { font-size: 14px; letter-spacing: .01em; color: inherit; opacity: .9; }
+.nav-links button:hover, .nav-links button.active { opacity: 1; }
+.nav.over-hero .nav-links button { color: #fff; text-shadow: none; }
+
+.nav-right { gap: 12px; justify-content: flex-end; }
+.nav-right .mono { display: none; }
+
+/* Botón principal: el mismo naranja que el resto del sitio, más compacto */
+.nav-cta { padding: 11px 20px; font-size: 12px; white-space: nowrap; }
+
+/* Portada: la foto llega hasta arriba, el menú va encima */
+.hero-photo { margin-top: 0; }
+.hero-inner { padding-top: 112px; }
+main.con-menu { padding-top: 92px; }
+
+/* ---------- Portada ---------- */
+.hero-copy { display: flex; flex-direction: column; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; letter-spacing: .02em; margin-bottom: clamp(14px, 2vh, 22px); color: rgba(255, 255, 255, .92); }
+.hero-eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+.hero-eyebrow .hero-sep { opacity: .6; }
+.hero-title { max-width: none; text-transform: uppercase; font-size: clamp(44px, 8vw, 132px); line-height: .94; letter-spacing: -.02em; font-weight: 400; text-wrap: initial; }
+.hero-title .hero-l1, .hero-title .hero-l2 { display: block; }
+.hero-title .hero-l2 { padding-left: clamp(40px, 9vw, 150px); }
+.hero-title em { font-style: normal; }
+.hero-bottom { flex-direction: row-reverse; align-items: flex-end; margin-top: clamp(24px, 5vh, 56px); }
+.hero-lead { max-width: 28em; text-wrap: balance; font-size: clamp(15px, 1.4vw, 19px); }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 900px) {
+  .nav-inner { padding: 0 22px; height: 68px; grid-template-columns: auto 1fr; gap: 12px; }
+  .nav.scrolled .nav-inner { height: 58px; }
+  .nav-logo { width: 54px; }
+  .nav.scrolled .nav-logo { width: 42px; }
+  .nav-right .nav-cta { display: none; }
+  .nav .nav-toggle { margin-right: 0; }
+  /* Panel de enlaces: tarjeta crema bajo la barra */
+  .nav-links {
+    top: calc(100% + 6px); left: 12px; right: 12px;
+    border: 1px solid rgba(26, 26, 26, .08); border-radius: 20px;
+    background: rgba(255, 255, 255, .985); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+    padding: 8px 22px 24px; color: var(--ink);
+  }
+  .nav-links button { font-size: 28px; color: var(--ink); }
+  .nav-links .nav-panel-cta { color: #fff; }
+  .nav.open { background: transparent; box-shadow: none; }
+  .nav.open .nav-toggle { color: var(--ink); }
+  main.con-menu { padding-top: 68px; }
+  .hero-inner { padding-top: 84px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .hero-title { font-size: 8.2vw; }
+  .hero-title .hero-l1, .hero-title .hero-l2 { white-space: nowrap; }
+  .hero-title .hero-l2 { padding-left: 6vw; }
+}
+@media (prefers-reduced-motion: reduce) { .nav, .nav-inner { transition: none; } }

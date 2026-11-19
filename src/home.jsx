@@ -12,8 +12,8 @@ const Home = ({ go }) => (
     <HeroSection go={go} />
     <div className="page-rest" id="inicio-contenido">
       <StatsSection />
-      <EsenciaSection go={go} />
       <DivisionesSection go={go} />
+      <EsenciaSection go={go} />
       <IndustriasSection />
       <InnovacionSection go={go} />
       <PersonalCTA go={go} />

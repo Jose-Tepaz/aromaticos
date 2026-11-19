@@ -49,7 +49,7 @@ const Contact = ({ go }) => {
                 ].map(([k, v, mail], i) => (
                   <Reveal key={i} delay={i * 80} style={{ padding: "28px 0", borderTop: "1px solid var(--rule)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-                      <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500 }}>{k}</h3>
+                      <h3 className="serif" style={{ fontSize: 36, margin: 0 }}>{k}</h3>
                       <span className="mono" style={{ opacity: .5 }}>0{i+1}</span>
                     </div>
                     <p style={{ fontSize: 14, opacity: .75, margin: "0 0 10px" }}>{v}</p>
@@ -57,7 +57,7 @@ const Contact = ({ go }) => {
                   </Reveal>
                 ))}
                 <div style={{ padding: "28px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-                  <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500, marginBottom: 10 }}>Teléfono</h3>
+                  <h3 className="serif" style={{ fontSize: 36, margin: 0, marginBottom: 10 }}>Teléfono</h3>
                   <div className="mono">+52 55 0000 0000</div>
                 </div>
               </div>

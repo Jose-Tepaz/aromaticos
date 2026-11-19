@@ -2,14 +2,14 @@ const d = (ms) => ({ "--d": `${ms}ms` });
 
 // Fotos del carrusel de fondo (se funden una a otra)
 const SLIDES = [
-  { src: "/imagenes/division-fragancias.jpg", pos: "50% 50%" },
-  { src: "/imagenes/hero-frascos.webp",       pos: "50% 62%" },   // frascos ámbar con etiquetas
-  { src: "/imagenes/hero-laboratorio.webp",   pos: "50% 55%" },   // polvos y frascos en el laboratorio
+  { src: "/imagenes/hero-tambores.webp", pos: "50% 42%" },   // tambores de esencias en el almacén
+  { src: "/imagenes/hero-operario.webp", pos: "50% 36%" },   // operario pesando una esencia
+  { src: "/imagenes/hero-planta.webp",   pos: "50% 50%" },   // collage: producción, almacén y laboratorio
 ];
 
 const HeroSection = ({ go }) => (
     <section className="hero-photo">
-      <div className="hero-bg" aria-hidden="true">
+      <div className="hero-bg" aria-hidden="true" style={{ "--n": SLIDES.length }}>
         {SLIDES.map(({ src, pos }, i) => (
           <img
             key={src}
@@ -26,15 +26,13 @@ const HeroSection = ({ go }) => (
       </div>
 
       <div className="wrap hero-inner">
-        <div className="hero-meta mono stagger-in" style={d(700)}>
-          <span>Hecho en México</span><span className="hero-sep">//</span><span>Desde 1956</span>
-        </div>
-
         <div className="hero-copy">
-          <h1 className="serif stagger-in hero-title" style={d(150)}>
-            Desde 1956, creando
-            <em className="em-draw" style={{ color: "var(--accent)" }}> aromas</em> y
-            <em className="em-draw" style={{ color: "var(--accent)" }}> sabores</em> que dejan huella.
+          <div className="hero-eyebrow stagger-in" style={d(100)}>
+            <i aria-hidden="true" />Desde 1956 <span className="hero-sep">·</span> Hecho en México
+          </div>
+          <h1 className="serif stagger-in hero-title" style={d(200)}>
+            <span className="hero-l1"><em>Aromas</em> y <em>sabores</em></span>
+            <span className="hero-l2">que dejan huella.</span>
           </h1>
 
           <div className="hero-bottom">

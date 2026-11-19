@@ -1,8 +1,24 @@
 import { Puntos } from "./home/InnovacionSection.jsx";
+import { useRef } from "react";
 import { Placeholder, PersonalCTA } from "./components.jsx";
-import { Reveal } from "./motion.jsx";
+import { Reveal, useInView, useEscalera } from "./motion.jsx";
+
+// Fila de la línea del tiempo: el año y el título suben, luego el texto y el número, en cascada (como en miligram.pt)
+const FilaTiempo = ({ t, i, total }) => {
+  const [ref, seen] = useInView({ threshold: 0.35, rootMargin: "0px 0px -6% 0px" });
+  return (
+    <div ref={ref} className={`timeline-row tl-fila${seen ? " tl-in" : ""}`}>
+      <div className="tl-parte tl-a serif tl-year">{t.year}</div>
+      <h3 className="tl-parte tl-a serif" style={{ fontSize: 34, margin: 0 }}>{t.title}</h3>
+      <p className="tl-parte tl-b" style={{ fontSize: 14, lineHeight: 1.6, margin: 0 }}>{t.text}</p>
+      <span className="tl-parte tl-c mono tl-num">{String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+    </div>
+  );
+};
 
 const About = ({ go }) => {
+  const valores = useRef(null);
+  useEscalera(valores);
   const timeline = [
     { year: "1956", title: "Fundación", text: "Nace Aromáticos en la Ciudad de México como un pequeño laboratorio familiar dedicado al arte de la perfumería." },
     { year: "1962", title: "Agua de Colonia Sanborns", text: "Desarrollamos la fórmula de la icónica Agua de Colonia Sanborns, que se volvería parte de la memoria olfativa de México." },
@@ -57,13 +73,13 @@ const About = ({ go }) => {
       <section style={{ padding: "var(--section-y-lg) 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Nuestros valores</div>
-          <div className="paso-escalera valores">
+          <div className="paso-escalera valores" ref={valores}>
             {[
               ["Tradición", "Siete décadas perfeccionando el arte de la perfumería y los sabores."],
               ["Innovación", "Laboratorios activos en I+D, con procesos modernos y trazables."],
               ["Cercanía", "Operamos como compañeros de desarrollo, no como proveedores."],
             ].map(([k, v], i) => (
-              <Reveal key={i} className="paso-card">
+              <article key={i} className="paso-card">
                 <div className="paso-top">
                   <span className="mono">Valor {i + 1}</span>
                   <Puntos n={i + 1} />
@@ -72,7 +88,7 @@ const About = ({ go }) => {
                   <h3 className="serif paso-titulo">{k}</h3>
                   <p className="p-card" style={{ margin: 0 }}>{v}</p>
                 </div>
-              </Reveal>
+              </article>
             ))}
           </div>
         </div>
@@ -90,12 +106,7 @@ const About = ({ go }) => {
 
           <div>
             {timeline.map((t, i) => (
-              <Reveal key={i} className="timeline-row" variant="left" delay={(i % 3) * 60}>
-                <div className="serif" style={{ fontSize: 48, lineHeight: 1, letterSpacing: "-.02em" }}>{t.year}</div>
-                <h3 className="serif" style={{ fontSize: 26, margin: 0, fontWeight: 500 }}>{t.title}</h3>
-                <p style={{ fontSize: 14, lineHeight: 1.6, opacity: .8, margin: 0 }}>{t.text}</p>
-                <span className="mono" style={{ opacity: .4, textAlign: "right" }}>{String(i+1).padStart(2, "0")} / {String(timeline.length).padStart(2, "0")}</span>
-              </Reveal>
+              <FilaTiempo key={i} t={t} i={i} total={timeline.length} />
             ))}
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Reveal } from "../motion.jsx";
 
 // Iconos de línea simples (24×24), heredan el color del texto
@@ -43,33 +44,86 @@ const INDUSTRIAS = [
     text: "Desarrollamos fragancias para productos de limpieza y cuidado del hogar, adaptadas a las necesidades de cada formulación." },
 ];
 
-const IndustriasSection = () => (
-  <section className="industrias-azul" style={{ padding: "var(--section-y-lg) 0" }}>
-    <div className="wrap">
-      <div className="split-1-2" style={{ alignItems: "center" }}>
-        <Reveal>
-          <div className="eyebrow">Industrias</div>
-          <h2 className="section-title" style={{ marginBottom: 0 }}>
-            Soluciones para diferentes <em style={{ color: "var(--accent)" }}>industrias</em>.
-          </h2>
-        </Reveal>
+// Bloque azul con las tarjetas en fila: al bajar, la sección se queda fija y las tarjetas avanzan hacia un lado (estilo Sunvane)
+const IndustriasSection = () => {
+  const fuera = useRef(null), pista = useRef(null);
 
-        <div className="cols-2-tight">
-          {INDUSTRIAS.map((it, i) => (
-            <Reveal key={it.name} delay={i * 90} variant="fade" className="industria-card">
-              <svg className="industria-icon" viewBox="0 0 24 24" width="34" height="34" fill="none"
-                   stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                {ICONS[it.icon]}
-              </svg>
-              <h3 className="serif" style={{ fontSize: "var(--title-card)", margin: "20px 0 8px", fontWeight: 400 }}>{it.name}</h3>
-              <div className="mono industria-via">{it.via}</div>
-              <p className="p-card" style={{ margin: "14px 0 0" }}>{it.text}</p>
-            </Reveal>
-          ))}
+  useEffect(() => {
+    const el = fuera.current, track = pista.current;
+    if (!el || !track) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0, x = 0, meta = 0, recorrido = 0;
+    const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+    // Mide el recorrido: hasta que la última tarjeta quede alineada con el borde derecho del contenido
+    const medir = () => {
+      if (reduce || window.innerWidth <= 900) { el.style.removeProperty("--alto"); track.style.transform = ""; recorrido = 0; return; }
+      const ancho = track.parentElement.previousElementSibling?.querySelector(".ind-h-cab")?.clientWidth || (window.innerWidth - 80);
+      recorrido = Math.max(0, track.scrollWidth - ancho);
+      // La sección se queda fija ~2,6 veces el recorrido: el avance es lento y suave, como en Sunvane
+      el.style.setProperty("--alto", `${Math.round(window.innerHeight + Math.max(recorrido * 2.6, window.innerHeight * 0.8))}px`);
+    };
+    const objetivo = () => {
+      const r = el.getBoundingClientRect();
+      meta = -recorrido * clamp01(-r.top / Math.max(1, r.height - window.innerHeight));
+    };
+    // Bucle con inercia: la fila persigue el scroll en vez de saltar
+    const paso = () => {
+      raf = 0;
+      objetivo();
+      x += (meta - x) * 0.14;
+      if (Math.abs(meta - x) < 0.3) x = meta;
+      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+      if (x !== meta) raf = requestAnimationFrame(paso);
+    };
+    const pedir = () => { if (!raf) raf = requestAnimationFrame(paso); };
+    const alCambiar = () => { medir(); objetivo(); x = meta; pedir(); };
+    alCambiar();
+    window.addEventListener("scroll", pedir, { passive: true });
+    window.addEventListener("resize", alCambiar);
+    return () => { window.removeEventListener("scroll", pedir); window.removeEventListener("resize", alCambiar); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+
+  return (
+    <section className="industrias-azul ind-h" ref={fuera}>
+      <div className="ind-h-fijo">
+        <div className="wrap">
+          <Reveal className="ind-h-cab">
+            <div>
+              <div className="eyebrow">Industrias</div>
+              <h2 className="section-title" style={{ marginBottom: 0 }}>
+                Soluciones para diferentes <em>industrias</em>.
+              </h2>
+            </div>
+            <p className="p-intro ind-h-intro">
+              Un mismo laboratorio, cuatro industrias: cada formulación se adapta a las necesidades de tu producto.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="ind-h-ventana">
+          <div className="ind-h-pista" ref={pista}>
+            {INDUSTRIAS.map((it, i) => (
+              <article key={it.name} className="ind4-card ind-h-card">
+                <div className="ind4-top">
+                  <span className="ind4-num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="mono ind4-via">{it.via}</span>
+                </div>
+                <svg className="ind4-icon" viewBox="0 0 24 24" width="64" height="64" fill="none"
+                     stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  {ICONS[it.icon]}
+                </svg>
+                <div className="ind4-bottom">
+                  <h3 className="serif ind4-nombre">{it.name}</h3>
+                  <p className="p-card" style={{ margin: 0 }}>{it.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default IndustriasSection;

@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import "./dv-propuestas.css";
 import "./paneles-nuevos.css";
+import "./nav-flotante.css";
+import "./sunvane.css";
 import App from "./app.jsx";
 
 createRoot(document.getElementById("root")).render(

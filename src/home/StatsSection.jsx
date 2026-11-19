@@ -13,7 +13,7 @@ const StatsSection = () => (
       <div className="stats-grid" style={{ padding: "clamp(32px, 5vh, 52px) 0" }}>
         {STATS.map(([k, v], i) => (
           <Reveal key={i} delay={i * 110}>
-            <div className="serif" style={{ fontSize: "clamp(40px, 5vw, 54px)", lineHeight: 1, letterSpacing: "-.02em" }}>{k}</div>
+            <div className="serif stat-num">{k}</div>
             <div className="mono" style={{ marginTop: 10, opacity: .6 }}>{v}</div>
           </Reveal>
         ))}

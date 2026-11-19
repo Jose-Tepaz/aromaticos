@@ -1,5 +1,5 @@
 /* ---------- Fondo de las secciones Industrias y CTA: el crema de siempre (cambiar con ?tono=humo | durazno | arena) ---------- */
-:root { --tono-bg: transparent; --tono-card: #ebe4d9; --tono-card-hover: #e3dbcd; }
+:root { --tono-bg: transparent; --tono-card: #f8f0e5; --tono-card-hover: #f3e9d9; }
 html[data-tono="humo"] { --tono-bg: #ebe8e2; --tono-card: #f8f6f1; --tono-card-hover: #fdfcfa; }
 html[data-tono="durazno"] { --tono-bg: #f6d9c6; }
 html[data-tono="arena"] { --tono-bg: #ece0c8; }
@@ -24,7 +24,7 @@ html[data-tono="arena"] { --tono-bg: #ece0c8; }
   border: 1px solid rgba(26, 26, 26, .07);
   transition: opacity .8s var(--reveal-ease) var(--d, 0ms), transform .8s var(--reveal-ease) var(--d, 0ms), background .6s ease, border-color .6s ease;
 }
-.paso-card:hover { background: var(--tono-card-hover); border-color: rgba(26, 26, 26, .18); }
+.paso-card:hover { background: var(--tono-card-hover) !important; border-color: rgba(26, 26, 26, .18); }
 .paso-top { display: flex; justify-content: space-between; align-items: center; }
 .paso-puntos { display: inline-flex; gap: 4px; }
 .paso-puntos i { width: 7px; height: 7px; background: var(--fg); opacity: .22; transition: background .5s ease, opacity .5s ease; }
@@ -68,23 +68,31 @@ html[data-tono="arena"] { --tono-bg: #ece0c8; }
   --bg: var(--cream); --fg: var(--ink); --accent: var(--navy); --rule: rgba(26, 26, 26, .14); --fg-muted: rgba(26, 26, 26, .76);
   background: var(--tono-bg); color: var(--ink);
 }
-.industrias-azul .cols-2-tight { gap: 16px; border: 0; }
-.industrias-azul .cols-2-tight > * { border: 0 !important; }
-.industrias-azul .industria-card {
-  background: var(--tono-card); border: 1px solid rgba(26, 26, 26, .07) !important;
-  padding: clamp(26px, 3vw, 40px) !important;
-  transition: opacity .8s var(--reveal-ease) var(--d, 0ms), transform .8s var(--reveal-ease) var(--d, 0ms), background .6s ease, border-color .6s ease;
+/* Dos tonos que se alternan: sobre blanco las tarjetas son beige; sobre beige, blancas */
+.bg-crema { background: var(--cream); --bg: var(--cream); --tono-card: #fff; --tono-card-hover: #fff; }
+/* Industrias: cuatro tarjetas altas en fila (sin fotos), con número, icono y texto */
+.ind4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ind4-card {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-height: clamp(380px, 32vw, 460px);
+  padding: clamp(20px, 2vw, 28px); border-radius: var(--radius-img);
+  background: var(--tono-card); border: 1px solid rgba(26, 26, 26, .07);
+  transition: opacity 1.1s var(--reveal-ease) var(--d, 0ms), transform 1.1s var(--reveal-ease) var(--d, 0ms), background .6s ease, box-shadow .7s ease, border-color .6s ease;
 }
-.industrias-azul .industria-card:hover { background: var(--tono-card-hover); border-color: rgba(26, 26, 26, .18) !important; }
-.industrias-azul .industria-icon { color: var(--orange); opacity: .9; }
-.industrias-azul .industria-card:hover .industria-icon { opacity: 1; }
-.industrias-azul .industria-card:hover h3 { color: var(--navy); }
-.industrias-azul .industria-via { opacity: .6; }
-@media (max-width: 560px) { .industrias-azul .industria-card { padding: 26px 22px !important; } }
+.ind4-card:hover { background: var(--tono-card-hover); }
+.ind4-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ind4-num { width: 44px; height: 44px; border-radius: 50%; background: var(--orange); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 500; transition: transform .6s var(--reveal-ease); }
+.ind4-card:hover .ind4-num { transform: scale(1.1); }
+.ind4-via { opacity: .6; text-align: right; }
+.ind4-icon { align-self: center; color: var(--orange); opacity: .9; transition: transform .8s var(--reveal-ease), opacity .6s ease; }
+.ind4-card:hover .ind4-icon { transform: translateY(-6px) scale(1.08); opacity: 1; }
+.ind4-nombre { font-size: var(--title-card); font-weight: 400; margin: 0 0 10px; transition: color .6s ease; }
+.ind4-card:hover .ind4-nombre { color: var(--navy); }
+@media (max-width: 1100px) { .ind4 { grid-template-columns: repeat(2, 1fr); } .ind4-card { min-height: 320px; } }
+@media (max-width: 560px) { .ind4 { grid-template-columns: 1fr; } .ind4-card { min-height: 0; } .ind4-icon { align-self: flex-start; } }
 
 /* ---------- Pie sobre el azul profundo de la marca ---------- */
 .footer-foto {
-  --fg: var(--cream); --fg-muted: rgba(247, 240, 228, .82); --rule: rgba(255, 255, 255, .18); --accent: var(--orange);
+  --fg: var(--cream); --fg-muted: rgba(248, 240, 229, .82); --rule: rgba(255, 255, 255, .18); --accent: var(--orange);
   position: relative; isolation: isolate; overflow: hidden; color: var(--cream);
   background: var(--navy); border-top: 0; margin-top: 0;
   padding: clamp(72px, 10vh, 112px) 0 40px;
@@ -100,8 +108,7 @@ html[data-tono="arena"] { --tono-bg: #ece0c8; }
 @media (max-width: 520px) { .footer-foto { padding-top: 64px; margin-top: 0; } }
 
 /* ---------- Uniformidad: radio de 10 px y tarjetas iguales en todas las páginas ---------- */
-.industria-card, .paso-card, .dv-panel, .dv-lista-visor, .map-embed, .cta-photo-main, .dv-stack-foto-in { border-radius: var(--radius-img); }
-.industrias-azul .industria-card { border-radius: var(--radius-img); }
+.paso-card, .dv-panel, .dv-lista-visor, .map-embed, .cta-photo-main, .dv-stack-foto-in { border-radius: var(--radius-img); }
 .dv-stack-card { border-radius: calc(var(--radius-img) + 4px); }
 
 /* Catálogo de las páginas de división: tarjetas separadas, mismo tono y radio que el inicio */
@@ -121,3 +128,9 @@ html[data-tono="arena"] { --tono-bg: #ece0c8; }
 .esencia-foto { aspect-ratio: 4 / 5; max-height: 680px; width: 100%; }
 .esencia-foto .ph { height: 100%; }
 .esencia-foto .ph-label { display: none; }
+
+/* Fondo blanco en toda la página; el beige aparece solo en tarjetas, con opacidad creciente en los pasos */
+.paso-card:nth-child(1) { background: rgba(248, 240, 229, .45); }
+.paso-card:nth-child(2) { background: rgba(248, 240, 229, .65); }
+.paso-card:nth-child(3) { background: rgba(248, 240, 229, .85); }
+.paso-card:nth-child(4) { background: rgba(248, 240, 229, 1); }

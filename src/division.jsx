@@ -1,5 +1,5 @@
 import { Placeholder, PersonalCTA } from "./components.jsx";
-import { Reveal } from "./motion.jsx";
+import { CountUp, Reveal } from "./motion.jsx";
 
 const DIVISION_DATA = {
   fragancias: {
@@ -111,9 +111,7 @@ const Division = ({ id, go }) => {
                   letterSpacing: "-.03em", margin: "24px 0", fontWeight: 400,
                 }}>
                   {d.name.split(" ").map((w, i, arr) => (
-                    <span key={i} style={{ fontStyle: i === arr.length - 1 ? "italic" : "normal", color: i === arr.length - 1 ? "var(--accent)" : "inherit" }}>
-                      {w}{i < arr.length - 1 ? " " : ""}
-                    </span>
+                    i === arr.length - 1 ? <em key={i}>{w}</em> : <span key={i}>{w} </span>
                   ))}
                 </h1>
                 <p style={{ fontSize: 19, lineHeight: 1.5, maxWidth: 520, opacity: .85 }}>
@@ -123,12 +121,12 @@ const Division = ({ id, go }) => {
 
               <div style={{ display: "flex", gap: 32, marginTop: 40, flexWrap: "wrap" }}>
                 <div>
-                  <div className="serif" style={{ fontSize: 44, lineHeight: 1 }}>{d.items.length * 8}+</div>
+                  <div className="serif stat-num stat-num-sm"><CountUp to={d.items.length * 8} suffix="+" /></div>
                   <div className="mono" style={{ opacity: .6, marginTop: 6 }}>Fórmulas activas</div>
                 </div>
                 
                 <div>
-                  <div className="serif" style={{ fontSize: 44, lineHeight: 1 }}>70+</div>
+                  <div className="serif stat-num stat-num-sm"><CountUp to={70} suffix="+" /></div>
                   <div className="mono" style={{ opacity: .6, marginTop: 6 }}>Años de experiencia</div>
                 </div>
                 
@@ -162,7 +160,7 @@ const Division = ({ id, go }) => {
                 <Placeholder variant={it.variant} label={it.name} height="220px" dark={it.variant === "cream"} />
                 <div className="catalog-body" style={{ padding: "20px 18px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                    <h3 className="serif catalog-name" style={{ fontSize: 24, margin: 0, fontWeight: 500 }}>{it.name}</h3>
+                    <h3 className="serif catalog-name" style={{ fontSize: 30, margin: 0 }}>{it.name}</h3>
                     <span className="mono catalog-code" style={{ opacity: .5 }}>{it.code}</span>
                   </div>
                   <p className="catalog-notes" style={{ fontSize: 13, lineHeight: 1.55, opacity: .7, margin: 0 }}>{it.notes}</p>
@@ -212,7 +210,7 @@ const Division = ({ id, go }) => {
                   <img className="ph-img" src={other.image} alt={other.name} loading="lazy" />
                 </div>
                 <div style={{ padding: "16px 4px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <h3 className="serif" style={{ fontSize: 28, margin: 0, fontWeight: 500 }}>{other.name}</h3>
+                  <h3 className="serif" style={{ fontSize: 36, margin: 0 }}>{other.name}</h3>
                   <span className="mono" style={{ opacity: .5 }}>Ver ↗</span>
                 </div>
               </article>

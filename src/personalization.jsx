@@ -1,8 +1,10 @@
 import { Puntos } from "./home/InnovacionSection.jsx";
-import { useState } from "react";
-import { Reveal } from "./motion.jsx";
+import { useRef, useState } from "react";
+import { Reveal, useEscalera } from "./motion.jsx";
 
 const Personalization = ({ go }) => {
+  const pasos = useRef(null);
+  useEscalera(pasos);
   const [form, setForm] = useState({
     tipo: "Fragancia",
     industria: "Cosmética",
@@ -23,25 +25,24 @@ const Personalization = ({ go }) => {
     setTimeout(() => setSent(false), 4000);
   };
 
+  // Estilo del formulario: campos rellenos en beige con esquinas redondeadas, dentro de una tarjeta blanca
   const inputStyle = {
-    width: "100%", padding: "14px 0",
-    background: "transparent", border: "none",
-    borderBottom: "1px solid var(--rule)",
-    color: "var(--fg)", fontFamily: "inherit", fontSize: 16, borderRadius: 0,
-    outline: "none",
+    width: "100%", padding: "15px 18px", boxSizing: "border-box",
+    background: "var(--cream)", border: "1px solid transparent",
+    color: "var(--fg)", fontFamily: "inherit", fontSize: 15, borderRadius: 16,
   };
   const labelStyle = {
     display: "block", fontFamily: "var(--font-sans)", fontWeight: 500,
-    fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase",
-    opacity: .6, marginBottom: 4,
+    fontSize: 13, letterSpacing: 0, textTransform: "none",
+    marginBottom: 10,
   };
   const chip = (active) => ({
-    padding: "11px 16px", borderRadius: 999,
-    border: `1px solid ${active ? "var(--fg)" : "var(--rule)"}`,
-    background: active ? "var(--fg)" : "transparent",
-    color: active ? "var(--bg)" : "var(--fg)",
-    fontSize: 13, cursor: "pointer",
-    transition: "background .2s ease, color .2s ease, border-color .2s ease",
+    padding: "11px 20px", borderRadius: 999,
+    border: "1px solid transparent",
+    background: active ? "var(--ink)" : "var(--cream)",
+    color: active ? "#fff" : "var(--ink)",
+    fontSize: 13, fontWeight: 500, cursor: "pointer",
+    transition: "background .25s ease, color .25s ease",
   });
 
   return (
@@ -67,14 +68,14 @@ const Personalization = ({ go }) => {
       <section style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow" style={{ marginBottom: 40 }}>Así trabajamos</div>
-          <div className="paso-escalera">
+          <div className="paso-escalera" ref={pasos}>
             {[
               ["Diagnóstico", "Sesión inicial para entender tu producto, marca e industria."],
               ["Desarrollo", "Laboratorio trabaja muestras y perfiles hasta afinar la fórmula."],
               ["Validación", "Pruebas de estabilidad, regulatorio y producción piloto."],
               ["Entrega", "Producción a escala con trazabilidad y acompañamiento técnico."],
             ].map(([t, d], i) => (
-              <Reveal key={i} className="paso-card">
+              <article key={i} className="paso-card">
                 <div className="paso-top">
                   <span className="mono">Paso {i + 1}</span>
                   <Puntos n={i + 1} />
@@ -83,13 +84,13 @@ const Personalization = ({ go }) => {
                   <h3 className="serif paso-titulo">{t}</h3>
                   <p className="p-card" style={{ margin: 0 }}>{d}</p>
                 </div>
-              </Reveal>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "var(--section-y-lg) 0" }}>
+      <section className="bg-crema" style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="split-form">
             <div className="sticky-side">
@@ -109,7 +110,7 @@ const Personalization = ({ go }) => {
               </div>
             </div>
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className="form-card">
               <div style={{ marginBottom: 40 }}>
                 <div id="lbl-tipo" style={labelStyle}>01 — ¿Qué tipo de proyecto?</div>
                 <div role="group" aria-labelledby="lbl-tipo" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
@@ -135,7 +136,7 @@ const Personalization = ({ go }) => {
                   value={form.descripcion} onChange={e => set("descripcion", e.target.value)}
                   placeholder="Ej. Necesito una fragancia floral-amaderada para una línea de shampoos premium…"
                   rows={4}
-                  style={{ ...inputStyle, padding: "14px 0", resize: "vertical" }}
+                  style={{ ...inputStyle, resize: "vertical", minHeight: 130 }}
                 />
               </div>
 
@@ -154,7 +155,7 @@ const Personalization = ({ go }) => {
                 </div>
               </div>
 
-              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 40, marginBottom: 40 }}>
+              <div style={{ borderTop: "1px solid rgba(26, 26, 26, .08)", paddingTop: 32, marginBottom: 32 }}>
                 <div className="mono" style={{ opacity: .6, marginBottom: 20 }}>Tus datos</div>
                 <div className="fields-2" style={{ marginBottom: 32 }}>
                   <div>

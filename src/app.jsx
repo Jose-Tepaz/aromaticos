@@ -55,7 +55,7 @@ const App = () => {
     <>
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <Nav page={page} go={go} />
-      <main id="contenido" tabIndex={-1}>
+      <main id="contenido" tabIndex={-1} className={page === "home" ? "" : "con-menu"}>
         <Routes>
           <Route path="/" element={<Home go={go} />} />
           <Route path="/fragancias" element={<Division id="fragancias" go={go} />} />

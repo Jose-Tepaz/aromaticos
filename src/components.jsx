@@ -56,6 +56,7 @@ export const Nav = ({ page, go }) => {
           {items.map((it, i) => (
             <button
               key={it.id}
+              data-id={it.id}
               style={{ "--i": i }}
               className={page === it.id ? "active" : ""}
               onClick={() => go(it.id)}
@@ -67,7 +68,7 @@ export const Nav = ({ page, go }) => {
         </div>
         <div className="nav-right">
           <span className="mono">EST. 1956</span>
-          <button className="nav-cta" onClick={() => go("personalizacion")}>Personalizar</button>
+          <button className="btn-primary nav-cta" onClick={() => go("personalizacion")}>Personalizar <span className="arrow">↗</span></button>
           <button
             className="nav-toggle"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}

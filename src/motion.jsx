@@ -128,3 +128,43 @@ export const useSectionReveal = (key) => {
     return () => io.disconnect();
   }, [key]);
 };
+
+/* Escalera de tarjetas: suben desde abajo con el scroll, una tras otra, y se frenan en su escalón (con inercia).
+   `contenedor` es el elemento que tiene las tarjetas `.paso-card` como hijos directos; `ancla` (opcional) es el encabezado. */
+export const useEscalera = (contenedor, ancla = null, desfase = 215) => {
+  useEffect(() => {
+    const cont = contenedor.current;
+    if (!cont) return;
+    const reduce = prefersReduced();
+    const cards = [...cont.querySelectorAll(":scope > .paso-card")];
+    const actual = cards.map(() => 0);
+    let raf = 0;
+    const suave = (t) => 1 - Math.pow(1 - t, 3);
+    const objetivo = (i) => {
+      if (reduce || window.innerWidth <= 900) return 0;
+      const vh = window.innerHeight;
+      const T = ancla && ancla.current ? ancla.current.getBoundingClientRect().top : cont.getBoundingClientRect().top - desfase;
+      const fin = (0.30 - i * 0.11) * vh;
+      const dur = 0.42 * vh;
+      const p = Math.min(1, Math.max(0, (fin + dur - T) / dur));
+      return (1 - suave(p)) * 0.66 * vh;
+    };
+    const poner = (c, v) => { c.style.transform = v ? `translate3d(0, ${v.toFixed(1)}px, 0)` : ""; };
+    const paso = () => {
+      raf = 0;
+      let sigue = false;
+      cards.forEach((c, i) => {
+        const meta = objetivo(i);
+        actual[i] += (meta - actual[i]) * 0.12;
+        if (Math.abs(meta - actual[i]) < 0.3) actual[i] = meta; else sigue = true;
+        poner(c, actual[i]);
+      });
+      if (sigue) raf = requestAnimationFrame(paso);
+    };
+    const pedir = () => { if (!raf) raf = requestAnimationFrame(paso); };
+    cards.forEach((c, i) => { actual[i] = objetivo(i); poner(c, actual[i]); });
+    window.addEventListener("scroll", pedir, { passive: true });
+    window.addEventListener("resize", pedir);
+    return () => { window.removeEventListener("scroll", pedir); window.removeEventListener("resize", pedir); if (raf) cancelAnimationFrame(raf); };
+  }, [contenedor, ancla, desfase]);
+};
