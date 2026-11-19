@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "../motion.jsx";
 
 // Iconos de línea simples (24×24), heredan el color del texto
@@ -46,7 +46,24 @@ const INDUSTRIAS = [
 
 // Bloque azul con las tarjetas en fila: al bajar, la sección se queda fija y las tarjetas avanzan hacia un lado (estilo Sunvane)
 const IndustriasSection = () => {
-  const fuera = useRef(null), pista = useRef(null);
+  const fuera = useRef(null), pista = useRef(null), ventana = useRef(null);
+  const [activa, setActiva] = useState(0);
+
+  // Solo móvil: la fila se desliza con el dedo y se detiene en cada tarjeta; esto lleva la cuenta de la tarjeta visible
+  const alDeslizar = () => {
+    const v = ventana.current, t = pista.current;
+    if (!v || !t || window.innerWidth > 900) return;
+    const c = t.children[0];
+    const paso = c.offsetWidth + (parseFloat(getComputedStyle(t).columnGap) || 16);
+    setActiva(Math.min(INDUSTRIAS.length - 1, Math.max(0, Math.round(v.scrollLeft / paso))));
+  };
+  const irA = (k) => {
+    const v = ventana.current, t = pista.current;
+    if (!v || !t) return;
+    const c = t.children[0];
+    const paso = c.offsetWidth + (parseFloat(getComputedStyle(t).columnGap) || 16);
+    v.scrollTo({ left: Math.min(INDUSTRIAS.length - 1, Math.max(0, k)) * paso, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const el = fuera.current, track = pista.current;
@@ -101,7 +118,7 @@ const IndustriasSection = () => {
           </Reveal>
         </div>
 
-        <div className="ind-h-ventana">
+        <div className="ind-h-ventana" ref={ventana} onScroll={alDeslizar}>
           <div className="ind-h-pista" ref={pista}>
             {INDUSTRIAS.map((it, i) => (
               <article key={it.name} className="ind4-card ind-h-card">
@@ -119,6 +136,20 @@ const IndustriasSection = () => {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+
+        {/* Solo móvil: contador, puntos y flechas para pasar de una tarjeta a otra */}
+        <div className="ind-h-controles">
+          <div className="ind-h-puntos" role="tablist" aria-label="Elegir industria">
+            {INDUSTRIAS.map((it, k) => (
+              <button key={it.name} type="button" role="tab" aria-selected={k === activa} aria-label={it.name}
+                className={k === activa ? "on" : ""} onClick={() => irA(k)} />
+            ))}
+          </div>
+          <div className="ind-h-flechas">
+            <button type="button" className="ind-h-flecha" aria-label="Industria anterior" disabled={activa === 0} onClick={() => irA(activa - 1)}>←</button>
+            <button type="button" className="ind-h-flecha" aria-label="Industria siguiente" disabled={activa === INDUSTRIAS.length - 1} onClick={() => irA(activa + 1)}>→</button>
           </div>
         </div>
       </div>

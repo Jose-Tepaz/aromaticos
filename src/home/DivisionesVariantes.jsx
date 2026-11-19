@@ -241,7 +241,7 @@ export const DivisionesGaleria = ({ go }) => (
           </div>
           <h3 className="serif dv-gal-titulo">{d.title}</h3>
           <p className="dv-gal-desc">{d.desc}</p>
-          <button type="button" className="dv-ind-cta" onClick={(e) => { e.stopPropagation(); go(d.id); }}>Ver división <span className="arrow">↗</span></button>
+          <button type="button" className="btn-primary" onClick={(e) => { e.stopPropagation(); go(d.id); }}>Ver división <span className="arrow">↗</span></button>
         </article>
       </Reveal>
     ))}
@@ -337,7 +337,7 @@ export const DivisionesPin = ({ go }) => {
                     {d.tag.split(" · ").map((t) => <li key={t}>{t}</li>)}
                   </ul>
                 </div>
-                <button type="button" className="dv-ind-cta" onClick={() => go(d.id)}>Ver división <span className="arrow">↗</span></button>
+                <button type="button" className="btn-primary" onClick={() => go(d.id)}>Ver división <span className="arrow">↗</span></button>
               </article>
             ))}
           </div>

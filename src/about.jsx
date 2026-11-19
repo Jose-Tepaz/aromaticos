@@ -38,7 +38,7 @@ const About = ({ go }) => {
 
   return (
     <div className="page">
-      <section style={{ padding: "var(--section-y) 0 40px" }}>
+      <section className="about-hero" style={{ padding: "var(--section-y) 0 40px" }}>
         <div className="wrap">
           <div className="eyebrow">Nuestra esencia</div>
           <h1 className="serif stagger-in" style={{
@@ -50,7 +50,7 @@ const About = ({ go }) => {
         </div>
       </section>
 
-      <section style={{ padding: "var(--section-y-lg) 0" }}>
+      <section className="about-intro" style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
           <div className="split-2" style={{ alignItems: "center" }}>
             <Reveal>
@@ -104,7 +104,7 @@ const About = ({ go }) => {
 
       <section style={{ padding: "var(--section-y-lg) 0" }}>
         <div className="wrap">
-          <Reveal className="head-row" style={{ marginBottom: 60 }}>
+          <Reveal className="head-row tl-cab" style={{ marginBottom: 60 }}>
             <div>
               <div className="eyebrow">Línea del tiempo</div>
               <h2 className="section-title">Setenta años,<br/><em>una sola historia</em>.</h2>

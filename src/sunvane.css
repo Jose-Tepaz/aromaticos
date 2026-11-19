@@ -367,3 +367,53 @@ h3.serif { font-family: var(--font-accent) !important; font-style: italic !impor
   .slider-slide, .slider-slide img { transition: none; transform: none; }
   .slider-barra.on span::after { animation: none; transform: scaleX(1); }
 }
+
+/* Botones "Ver división" de las tarjetas de Divisiones: naranja como el resto de botones principales */
+.dv-pin-card .btn-primary, .dv-gal-item .btn-primary { align-self: flex-start; }
+
+/* ===================== SOLO VISTA MÓVIL (≤ 560 px) ===================== */
+@media (max-width: 560px) {
+  /* Cifras del inicio: una línea azul suave separa cada bloque */
+  .stats-grid { gap: 0; }
+  .stats-grid > * { padding: 28px 0; }
+  .stats-grid > * + * { border-left: 0; border-top: 1px solid rgba(21, 82, 147, .24); }
+}
+
+/* ===== Industrias como slide en móvil (≤ 900 px, que es cuando la sección deja de quedarse fija) ===== */
+.ind-h-controles { display: none; }
+@media (max-width: 900px) {
+  .ind-h-ventana { scroll-padding-left: 22px; scroll-snap-type: x mandatory; }
+  .ind-h-card { flex-basis: min(82vw, 380px); scroll-snap-align: start; }
+  .ind-h-controles { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 22px 0; }
+  .ind-h-puntos { display: flex; gap: 8px; align-items: center; }
+  .ind-h-puntos button { width: 8px; height: 8px; padding: 0; border-radius: 999px; background: rgba(255, 255, 255, .35); transition: width .4s cubic-bezier(.22, .61, .36, 1), background .3s ease; }
+  .ind-h-puntos button.on { width: 28px; background: var(--orange); }
+  .ind-h-flechas { display: flex; gap: 8px; }
+  .ind-h-flecha { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--cream); transition: opacity .3s ease, background .3s ease, color .3s ease; }
+  .ind-h-flecha:active { background: var(--orange); color: #fff; }
+  .ind-h-flecha:disabled { opacity: .35; }
+}
+
+/* ===== SOLO MÓVIL: sin la línea fina oscura sobre el pie ===== */
+/* Con alturas fraccionarias (barra del navegador que sube y baja) se asomaba 1 px de la portada que va detrás
+   justo debajo del último bloque; esta sombra blanca lo tapa. */
+@media (max-width: 900px) {
+  .page-rest { box-shadow: 0 3px 0 0 #fff; }
+  .page { background: #fff; }
+}
+
+/* ===== SOLO MÓVIL: Nosotros, menos espacio entre el título y el primer texto ===== */
+@media (max-width: 560px) {
+  .about-hero { padding-bottom: 0 !important; }
+  .about-intro { padding-top: 24px !important; }
+}
+
+/* ===== SOLO MÓVIL: línea del tiempo menos apretada ===== */
+@media (max-width: 560px) {
+  .tl-cab { margin-bottom: 14px !important; gap: 10px; }
+  .timeline-row { grid-template-columns: 1fr auto; gap: 10px 16px; padding: 24px 0; align-items: center; }
+  .timeline-row > .tl-year { grid-column: 1; grid-row: 1; font-size: 40px; }
+  .timeline-row > .tl-num { display: block; grid-column: 2; grid-row: 1; font-size: 11px; }
+  .timeline-row > h3 { grid-column: 1 / -1; grid-row: 2; font-size: 30px !important; }
+  .timeline-row > p { grid-column: 1 / -1; grid-row: 3; font-size: 14px; max-width: 34ch; }
+}
